@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="判断是否ip地址1234function check_is_ip(s) &amp;#123;    var patt = /^(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5])(\.(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5]))&amp;#123;3&amp;#125;$/;    return patt.test(s);&amp;#125; 字符串格式化">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用js代码">
+<meta property="og:url" content="http://yoursite.com/2018/05/20/常用js代码/index.html">
+<meta property="og:site_name" content="Lscy">
+<meta property="og:description" content="判断是否ip地址1234function check_is_ip(s) &amp;#123;    var patt = /^(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5])(\.(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5]))&amp;#123;3&amp;#125;$/;    return patt.test(s);&amp;#125; 字符串格式化">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-20T02:17:12.092Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用js代码">
+<meta name="twitter:description" content="判断是否ip地址1234function check_is_ip(s) &amp;#123;    var patt = /^(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5])(\.(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5]))&amp;#123;3&amp;#125;$/;    return patt.test(s);&amp;#125; 字符串格式化">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/20/常用js代码/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>常用js代码 | Lscy</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lscy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/常用js代码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">常用js代码
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 10:14:00 / 修改时间：10:17:12" itemprop="dateCreated datePublished" datetime="2018-05-20T10:14:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="判断是否ip地址"><a href="#判断是否ip地址" class="headerlink" title="判断是否ip地址"></a>判断是否ip地址</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check_is_ip</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> patt = <span class="regexp">/^(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5])(\.(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5]))&#123;3&#125;$/</span>;</span><br><span class="line">    <span class="keyword">return</span> patt.test(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>.prototype.format  = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;    </span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span>;    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/\&#123;(\d+)\&#125;/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">m,i</span>) </span>&#123;    </span><br><span class="line">        <span class="keyword">return</span> args[i];    </span><br><span class="line">    &#125;);    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="随机数"><a href="#随机数" class="headerlink" title="随机数"></a>随机数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getRandomInt</span>(<span class="params">min, max</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (max - min + <span class="number">1</span>)) + min;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="打开新的tab"><a href="#打开新的tab" class="headerlink" title="打开新的tab"></a>打开新的tab</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.open(<span class="string">'www.yourdomain.com'</span>,<span class="string">'_blank'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.location = <span class="string">"http://www.yourdomain.com"</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="清除字符串两边空格"><a href="#清除字符串两边空格" class="headerlink" title="清除字符串两边空格"></a>清除字符串两边空格</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = $.trim(s)</span><br></pre></td></tr></table></figure>
+<h3 id="string转int"><a href="#string转int" class="headerlink" title="string转int"></a>string转int</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// parseInt(string, radix)</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="built_in">parseInt</span>(<span class="string">"1000"</span>, <span class="number">10</span>);</span><br><span class="line"><span class="comment">// 如果转换的不是数字，则会返回NaN，可以用isNaN(x)来判断</span></span><br><span class="line"><span class="comment">// 缺点：并且如果转换的字符串是 123abc，则会返回123</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 使用正则来转换</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">str2int</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="regexp">/^\s*(\+|-)?\d+\s*$/</span>.test(<span class="built_in">String</span>(x)) )&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">parseInt</span>(x, <span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Number</span>.NaN;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ajax请求"><a href="#ajax请求" class="headerlink" title="ajax请求"></a>ajax请求</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    type: <span class="string">'POST'</span>,</span><br><span class="line">    url: url,</span><br><span class="line">    data: <span class="built_in">JSON</span>.stringify(data),</span><br><span class="line">    contentType: <span class="string">"application/json"</span>,  <span class="comment">// 发送信息至服务器时内容编码类型</span></span><br><span class="line">    beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 在发送请求之前调用，并且传入一个 XMLHttpRequest 作为参数。</span></span><br><span class="line">    &#125;,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span>(<span class="params">data, textStatus, jqXHR</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 当请求之后调用。传入返回后的数据，以及包含成功代码的字符串。</span></span><br><span class="line">    &#125;,</span><br><span class="line">    error: <span class="function"><span class="keyword">function</span>(<span class="params">jqXHR, textStatus, errorThrown</span>) </span>&#123; <span class="comment">// if error occured</span></span><br><span class="line">        <span class="comment">// 在请求出错时调用。传入 XMLHttpRequest 对象，描述错误类型的字符串以及一个异常对象（如果有的话）</span></span><br><span class="line">        alert(jqXHR.statusText + jqXHR.responseText);</span><br><span class="line">    &#125;,</span><br><span class="line">    complete: <span class="function"><span class="keyword">function</span>(<span class="params">data|jqXHR, textStatus, jqXHR|errorThrown</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 当请求完成之后调用这个函数，无论成功或失败。传入 XMLHttpRequest 对象，以及一个包含成功或错误代码的字符串。</span></span><br><span class="line">    &#125;,</span><br><span class="line">    dataType: <span class="string">'json'</span>，        <span class="comment">//预期服务器返回的数据类型</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 增加项</span><br><span class="line">$(<span class="string">'select.input-channel'</span>).append($(<span class="string">'&lt;option&gt;'</span>, &#123;</span><br><span class="line">    value: <span class="string">"v"</span>,</span><br><span class="line">    text: <span class="string">"t"</span>,</span><br><span class="line">&#125;));</span><br><span class="line"> </span><br><span class="line"># 监测变化</span><br><span class="line">$(<span class="string">"#select-time-range"</span>).change(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'change'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="交换两行"><a href="#交换两行" class="headerlink" title="交换两行"></a>交换两行</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"body"</span>).on(<span class="string">"click"</span>, <span class="string">".btn-index-down"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> trLength = $(<span class="string">".btn-index-down"</span>).length;</span><br><span class="line">    <span class="keyword">var</span> $tr = $(<span class="keyword">this</span>).parent().parent();</span><br><span class="line">    <span class="keyword">if</span> ($tr.index() != trLength - <span class="number">1</span>) &#123;</span><br><span class="line">        $tr.next().after($tr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">$(<span class="string">"body"</span>).on(<span class="string">"click"</span>, <span class="string">".btn-index-up"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> $tr = $(<span class="keyword">this</span>).parent().parent();</span><br><span class="line">    <span class="keyword">if</span> ($tr.index() != <span class="number">0</span>) &#123;</span><br><span class="line">        $tr.prev().before($tr);<span class="comment">//在每个匹配的元素之前插入内容。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="动态生成的元素捕获事件"><a href="#动态生成的元素捕获事件" class="headerlink" title="动态生成的元素捕获事件"></a>动态生成的元素捕获事件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"body"</span>).on(<span class="string">"click"</span>, <span class="string">".result-table-th"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="js-转移html字符"><a href="#js-转移html字符" class="headerlink" title="js 转移html字符"></a>js 转移html字符</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> entityMap = &#123;</span><br><span class="line">  <span class="string">'&amp;'</span>: <span class="string">'&amp;amp;'</span>,</span><br><span class="line">  <span class="string">'&lt;'</span>: <span class="string">'&amp;lt;'</span>,</span><br><span class="line">  <span class="string">'&gt;'</span>: <span class="string">'&amp;gt;'</span>,</span><br><span class="line">  <span class="string">'"'</span>: <span class="string">'&amp;quot;'</span>,</span><br><span class="line">  <span class="string">"'"</span>: <span class="string">'&amp;#39;'</span>,</span><br><span class="line">  <span class="string">'/'</span>: <span class="string">'&amp;#x2F;'</span>,</span><br><span class="line">  <span class="string">'`'</span>: <span class="string">'&amp;#x60;'</span>,</span><br><span class="line">  <span class="string">'='</span>: <span class="string">'&amp;#x3D;'</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escapeHtml</span> (<span class="params">string</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">String</span>(string).replace(<span class="regexp">/[&amp;&lt;&gt;"'`=\/]/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> entityMap[s];</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"<span class="selector-tag">Helvetica</span> <span class="selector-tag">Neue</span>",<span class="selector-tag">Roboto</span>,<span class="selector-tag">Arial</span>,"<span class="selector-tag">Droid</span> <span class="selector-tag">Sans</span>",<span class="selector-tag">sans-serif</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/20/Qt设置渐变背景/" rel="next" title="Qt设置渐变背景">
+                <i class="fa fa-chevron-left"></i> Qt设置渐变背景
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/20/win32项目中调出和隐藏控制台/" rel="prev" title="win32项目中调出和隐藏控制台">
+                win32项目中调出和隐藏控制台 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lscy</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">73</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断是否ip地址"><span class="nav-number">1.</span> <span class="nav-text">判断是否ip地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串格式化"><span class="nav-number">2.</span> <span class="nav-text">字符串格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机数"><span class="nav-number">3.</span> <span class="nav-text">随机数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开新的tab"><span class="nav-number">4.</span> <span class="nav-text">打开新的tab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向"><span class="nav-number">5.</span> <span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清除字符串两边空格"><span class="nav-number">6.</span> <span class="nav-text">清除字符串两边空格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string转int"><span class="nav-number">7.</span> <span class="nav-text">string转int</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ajax请求"><span class="nav-number">8.</span> <span class="nav-text">ajax请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">9.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换两行"><span class="nav-number">10.</span> <span class="nav-text">交换两行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态生成的元素捕获事件"><span class="nav-number">11.</span> <span class="nav-text">动态生成的元素捕获事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js-转移html字符"><span class="nav-number">12.</span> <span class="nav-text">js 转移html字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体"><span class="nav-number">13.</span> <span class="nav-text">字体</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lscy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

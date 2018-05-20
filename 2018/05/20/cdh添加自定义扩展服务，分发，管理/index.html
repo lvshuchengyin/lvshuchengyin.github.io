@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考https://github.com/cloudera/cm_ext https://github.com/cloudera/cm_csds 生成parcel123456789# 需要在目标文件夹内新建meta文件，并在meta中新建文件parcel.json，文件内容需要自己参考资料填写# 验证文件java -jar cm_ext/validator/target/validator.jar">
+<meta name="keywords" content="服务组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cdh添加自定义扩展服务，分发，管理">
+<meta property="og:url" content="http://yoursite.com/2018/05/20/cdh添加自定义扩展服务，分发，管理/index.html">
+<meta property="og:site_name" content="Lscy">
+<meta property="og:description" content="参考https://github.com/cloudera/cm_ext https://github.com/cloudera/cm_csds 生成parcel123456789# 需要在目标文件夹内新建meta文件，并在meta中新建文件parcel.json，文件内容需要自己参考资料填写# 验证文件java -jar cm_ext/validator/target/validator.jar">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-20T03:09:58.698Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cdh添加自定义扩展服务，分发，管理">
+<meta name="twitter:description" content="参考https://github.com/cloudera/cm_ext https://github.com/cloudera/cm_csds 生成parcel123456789# 需要在目标文件夹内新建meta文件，并在meta中新建文件parcel.json，文件内容需要自己参考资料填写# 验证文件java -jar cm_ext/validator/target/validator.jar">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/20/cdh添加自定义扩展服务，分发，管理/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>cdh添加自定义扩展服务，分发，管理 | Lscy</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lscy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/cdh添加自定义扩展服务，分发，管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">cdh添加自定义扩展服务，分发，管理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 11:06:00 / 修改时间：11:09:58" itemprop="dateCreated datePublished" datetime="2018-05-20T11:06:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/cloudera/cm_ext" target="_blank" rel="noopener">https://github.com/cloudera/cm_ext</a></p>
+<p><a href="https://github.com/cloudera/cm_csds" target="_blank" rel="noopener">https://github.com/cloudera/cm_csds</a></p>
+<h3 id="生成parcel"><a href="#生成parcel" class="headerlink" title="生成parcel"></a>生成parcel</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 需要在目标文件夹内新建meta文件，并在meta中新建文件parcel.json，文件内容需要自己参考资料填写</span></span><br><span class="line"><span class="comment"># 验证文件</span></span><br><span class="line">java -jar cm_ext/validator/target/validator.jar -p HELLO-1.0/meta/parcel.json</span><br><span class="line"><span class="comment"># 验证目录</span></span><br><span class="line">java -jar cm_ext/validator/target/validator.jar -d HELLO-1.0</span><br><span class="line"><span class="comment"># 打包parcel</span></span><br><span class="line">tar zcvf HELLO-1.0-el6.parcel HELLO-1.0 --owner=root --group=root</span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">java -jar cm_ext/validator/target/validator.jar -f HELLO-1.0-el6.parcel</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="对外提供http的parcel服务"><a href="#对外提供http的parcel服务" class="headerlink" title="对外提供http的parcel服务"></a>对外提供http的parcel服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成manifest.json</span></span><br><span class="line">python cm_ext/make_manifest/make_manifest.py /data/root</span><br><span class="line"><span class="comment"># 提供http服务</span></span><br><span class="line">python -m SimpleHTTPServer 10001</span><br></pre></td></tr></table></figure>
+<h3 id="配置cm的parcel"><a href="#配置cm的parcel" class="headerlink" title="配置cm的parcel"></a>配置cm的parcel</h3><p>添加上述http地址，即可分发parcel</p>
+<h3 id="生成CSD"><a href="#生成CSD" class="headerlink" title="生成CSD"></a>生成CSD</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建目录，内部结构为</span></span><br><span class="line">├── descriptor</span><br><span class="line">│   └── service.sdl</span><br><span class="line">└── scripts</span><br><span class="line">    └── control.sh</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 文件内容需要自己参考资料填写</span></span><br><span class="line"><span class="comment">#验证</span></span><br><span class="line">java -jar cm_ext/validator/target/validator.jar -s csd/HELLO-1.0/descriptor/service.sdl</span><br><span class="line"><span class="comment"># 打包</span></span><br><span class="line">jar -cvf HELLO-1.0.jar *</span><br><span class="line"><span class="comment"># 复制到csd目录</span></span><br><span class="line">~~~cp HELLO-1.0.jar /opt/cloudera/csd/</span><br><span class="line"></span><br><span class="line"><span class="comment">### 重启cm服务即可生效</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 示例</span></span><br><span class="line"></span><br><span class="line">HELLO-1.0/meta/parcel.json</span><br><span class="line">~~~ json</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"schema_version"</span>:1,</span><br><span class="line">    <span class="string">"name"</span>:<span class="string">"HELLO"</span>,</span><br><span class="line">    <span class="string">"version"</span>:<span class="string">"1.0"</span>,</span><br><span class="line">    <span class="string">"setActiveSymlink"</span>:<span class="literal">true</span>,</span><br><span class="line">    <span class="string">"conflicts"</span>:<span class="string">""</span>,</span><br><span class="line">    <span class="string">"provides"</span>:[</span><br><span class="line">        <span class="string">"hello"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"scripts"</span>:&#123;</span><br><span class="line">        <span class="string">"defines"</span>:<span class="string">"hello_env.sh"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"packages"</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"name"</span>:<span class="string">"hello"</span>,</span><br><span class="line">            <span class="string">"version"</span>:<span class="string">"1.0"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"components"</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"name"</span>:<span class="string">"hello"</span>,</span><br><span class="line">            <span class="string">"version"</span>:<span class="string">"1.0"</span>,</span><br><span class="line">            <span class="string">"pkg_version"</span>:<span class="string">"1.0"</span>,</span><br><span class="line">            <span class="string">"pkg_release"</span>:<span class="string">"1.0"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"users"</span>:&#123;&#125;,</span><br><span class="line">    <span class="string">"groups"</span>:[]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HELLO-1.0/meta/hello_env.sh<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HELLO_DIRNAME=<span class="variable">$&#123;PARCEL_DIRNAME&#125;</span></span><br><span class="line"><span class="built_in">export</span> CDH_HELLO_HOME=<span class="variable">$PARCELS_ROOT</span>/<span class="variable">$HELLO_DIRNAME</span></span><br></pre></td></tr></table></figure></p>
+<p>cat descriptor/service.sdl<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>:<span class="string">"HELLO"</span>,</span><br><span class="line">    <span class="attr">"label"</span>:<span class="string">"Hello"</span>,</span><br><span class="line">    <span class="attr">"description"</span>:<span class="string">"The hello service"</span>,</span><br><span class="line">    <span class="attr">"version"</span>:<span class="string">"1.1"</span>,</span><br><span class="line">    <span class="attr">"runAs"</span>:&#123;</span><br><span class="line">        <span class="attr">"user"</span>:<span class="string">"root"</span>,</span><br><span class="line">        <span class="attr">"group"</span>:<span class="string">"root"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"compatibility"</span>:&#123;</span><br><span class="line">        <span class="attr">"generation"</span>:<span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"icon"</span>:<span class="string">"images/icon.png"</span>,</span><br><span class="line">    <span class="attr">"parcel"</span> : &#123;</span><br><span class="line">        <span class="attr">"requiredTags"</span> : [ <span class="string">"hello"</span> ],</span><br><span class="line">        <span class="attr">"optionalTags"</span> : [ <span class="string">"hello-plugin"</span> ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"parameters"</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"name"</span>:<span class="string">"service_var1"</span>,</span><br><span class="line">            <span class="attr">"label"</span>:<span class="string">"Service Var1 Label"</span>,</span><br><span class="line">            <span class="attr">"description"</span>:<span class="string">"Service Var1 Description"</span>,</span><br><span class="line">            <span class="attr">"configName"</span>:<span class="string">"service.var1.config"</span>,</span><br><span class="line">            <span class="attr">"type"</span>:<span class="string">"string"</span>,</span><br><span class="line">            <span class="attr">"default"</span>:<span class="string">"this is a default"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"roles"</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"name"</span>:<span class="string">"HELLO_SERVICE"</span>,</span><br><span class="line">            <span class="attr">"label"</span>:<span class="string">"hello service"</span>,</span><br><span class="line">            <span class="attr">"pluralLabel"</span>:<span class="string">"hello services"</span>,</span><br><span class="line">            <span class="attr">"parameters"</span>:[</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"name"</span>:<span class="string">"init_content"</span>,</span><br><span class="line">                    <span class="attr">"label"</span>:<span class="string">"conf1"</span>,</span><br><span class="line">                    <span class="attr">"description"</span>:<span class="string">"conf"</span>,</span><br><span class="line">                    <span class="attr">"type"</span>:<span class="string">"string"</span>,</span><br><span class="line">                    <span class="attr">"default"</span>: <span class="string">"defaultiii"</span></span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"startRunner"</span>:&#123;</span><br><span class="line">                <span class="attr">"program"</span>:<span class="string">"scripts/control.sh"</span>,</span><br><span class="line">                <span class="attr">"args"</span>:[</span><br><span class="line">                    <span class="string">"start"</span></span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">"environmentVariables"</span>:&#123;</span><br><span class="line">                    <span class="attr">"PORT"</span>: <span class="string">"10002"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>scripts/control.sh<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">CMD=<span class="variable">$1</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">export</span> HELLO_HOME=<span class="variable">$&#123;HELLO_HOME:-$CDH_HELLO_HOME&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">case</span> <span class="variable">$CMD</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line">  (start)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Starting Hello123"</span></span><br><span class="line">    <span class="built_in">exec</span> python <span class="variable">$HELLO_HOME</span>/src/hello.py</span><br><span class="line">    ;;    </span><br><span class="line"> </span><br><span class="line">  (*)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Don't understand [<span class="variable">$CMD</span>]"</span></span><br><span class="line">    ;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/服务组件/" rel="tag"># 服务组件</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/20/cdh-Cloudera-Manager安装/" rel="next" title="cdh-Cloudera Manager安装">
+                <i class="fa fa-chevron-left"></i> cdh-Cloudera Manager安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/20/安装mvn/" rel="prev" title="安装mvn">
+                安装mvn <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lscy</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">73</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成parcel"><span class="nav-number">2.</span> <span class="nav-text">生成parcel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对外提供http的parcel服务"><span class="nav-number">3.</span> <span class="nav-text">对外提供http的parcel服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置cm的parcel"><span class="nav-number">4.</span> <span class="nav-text">配置cm的parcel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成CSD"><span class="nav-number">5.</span> <span class="nav-text">生成CSD</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lscy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

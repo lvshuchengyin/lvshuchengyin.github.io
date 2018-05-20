@@ -277,7 +277,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/19/test/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/elasticsearch-sql设置返回的size/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lscy">
@@ -296,8 +296,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/19/test/" itemprop="url">
-                  test
+                <a class="post-title-link" href="/2018/05/20/elasticsearch-sql设置返回的size/" itemprop="url">
+                  elasticsearch-sql设置返回的size
                 </a>
               
             
@@ -323,7 +323,7 @@
                 
               
 
-              <time title="创建时间：2018-05-19 15:26:00 / 修改时间：16:50:52" itemprop="dateCreated datePublished" datetime="2018-05-19T15:26:00+08:00">2018-05-19</time>
+              <time title="创建时间：2018-05-20 11:38:00 / 修改时间：11:38:34" itemprop="dateCreated datePublished" datetime="2018-05-20T11:38:00+08:00">2018-05-20</time>
             
 
             
@@ -333,6 +333,24 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -363,7 +381,9 @@
       
         
           
-            <h1 id="test"><a href="#test" class="headerlink" title="test"></a>test</h1>
+            <p>elasticsearch-sql 默认返回的size是200，10。</p>
+<p>可以在查询的时候显式设置size：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>  <span class="keyword">SUM</span>(succ) <span class="keyword">AS</span> s <span class="keyword">FROM</span> test1 <span class="keyword">GROUP</span> <span class="keyword">BY</span> terms(<span class="keyword">field</span>=<span class="string">'domain'</span>,<span class="keyword">size</span>=<span class="string">'1000'</span>,<span class="keyword">alias</span>=<span class="string">'domain'</span>), terms(<span class="keyword">field</span>=<span class="string">'server'</span>,<span class="keyword">size</span>=<span class="string">'1000'</span>,<span class="keyword">alias</span>=<span class="string">'server'</span>)</span><br></pre></td></tr></table></figure></p>
+
           
         
       
@@ -416,7 +436,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/19/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/elasticsearch常用操作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lscy">
@@ -435,8 +455,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/19/hello-world/" itemprop="url">
-                  Hello World
+                <a class="post-title-link" href="/2018/05/20/elasticsearch常用操作/" itemprop="url">
+                  elasticsearch常用操作
                 </a>
               
             
@@ -462,12 +482,361 @@
                 
               
 
-              <time title="创建时间：2018-05-19 14:45:16" itemprop="dateCreated datePublished" datetime="2018-05-19T14:45:16+08:00">2018-05-19</time>
+              <time title="创建时间：2018-05-20 11:35:00 / 修改时间：11:37:49" itemprop="dateCreated datePublished" datetime="2018-05-20T11:35:00+08:00">2018-05-20</time>
             
 
+            
+              
+
+              
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="使用aggregations，排序必须要开启fielddata"><a href="#使用aggregations，排序必须要开启fielddata" class="headerlink" title="使用aggregations，排序必须要开启fielddata"></a>使用aggregations，排序必须要开启fielddata</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PUT my_index/_mapping/my_type</span><br><span class="line">&#123;</span><br><span class="line">  &quot;properties&quot;: &#123;</span><br><span class="line">    &quot;my_field&quot;: &#123; </span><br><span class="line">      &quot;type&quot;:     &quot;text&quot;,</span><br><span class="line">      &quot;fielddata&quot;: true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="安装，参数设置"><a href="#安装，参数设置" class="headerlink" title="安装，参数设置"></a>安装，参数设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 内核设置</span></span><br><span class="line">vm.swappiness=1</span><br><span class="line">vm.max_map_count=262144</span><br><span class="line"><span class="comment"># 内存设置</span></span><br><span class="line"><span class="built_in">export</span> ES_HEAP_SIZE=8g</span><br><span class="line"><span class="comment"># 配置文件</span></span><br><span class="line">path.data: /home/<span class="built_in">stat</span>/elasticsearch-6.1.1/data</span><br><span class="line">path.logs: /home/<span class="built_in">stat</span>/elasticsearch-6.1.1/logs</span><br><span class="line">indices.fielddata.cache.size:  20%</span><br><span class="line"><span class="comment"># 外部访问</span></span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line"><span class="comment"># [1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]</span></span><br><span class="line"><span class="comment"># [2]: max number of threads [1024] for user [stat] is too low, increase to at least [4096]</span></span><br><span class="line"><span class="comment"># [3]: system call filters failed to install; check the logs and fix your configuration or disable system call filters at your own risk</span></span><br><span class="line">修改 /etc/security/limits.conf</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 131072</span><br><span class="line">* soft nproc 4096</span><br><span class="line">* hard nproc 4096</span><br><span class="line">修改 /etc/security/limits.d/90-nproc.conf</span><br><span class="line">* soft nproc 4096</span><br><span class="line">要在Memory下面修改增加:</span><br><span class="line">bootstrap.memory_lock: <span class="literal">false</span></span><br><span class="line">bootstrap.system_call_filter: <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/20/elasticsearch常用操作/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/mongodb常用操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/mongodb常用操作/" itemprop="url">
+                  mongodb常用操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 11:34:00 / 修改时间：11:35:33" itemprop="dateCreated datePublished" datetime="2018-05-20T11:34:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="备份-恢复"><a href="#备份-恢复" class="headerlink" title="备份,恢复"></a>备份,恢复</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mongodump -h127.0.0.1:27017 -o ./dump</span><br><span class="line">mongorestore -h 127.0.0.1:27017 ./dump</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 可以导出json或csv</span></span><br><span class="line">mongoexport   -h 127.0.0.1 --db tb_page --collection tb_page --<span class="built_in">type</span> json -o tb_page.json</span><br><span class="line">mongoimport -h 127.0.0.1 --db tb_page --collection tb_page --<span class="built_in">type</span> json --mode upsert --file tb_page.json</span><br></pre></td></tr></table></figure>
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.users.update(&#123;<span class="string">"_id"</span>: <span class="string">"id1"</span>&#125;, &#123;<span class="string">"<span class="variable">$set</span>"</span>: &#123;<span class="string">"groups"</span>: []&#125;&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.products.insert( &#123; item: <span class="string">"card"</span>, qty: 15 &#125; )</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/20/mongodb常用操作/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/plotly使用渲染图标chart/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/plotly使用渲染图标chart/" itemprop="url">
+                  plotly使用渲染图标chart
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 11:33:00 / 修改时间：11:34:15" itemprop="dateCreated datePublished" datetime="2018-05-20T11:33:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -498,17 +867,959 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <h3 id="使用bottle"><a href="#使用bottle" class="headerlink" title="使用bottle"></a>使用bottle</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> bottle <span class="keyword">import</span> route, run, template, Bottle, response</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> plotly <span class="keyword">import</span> utils</span><br><span class="line"><span class="keyword">import</span> plotly.graph_objs <span class="keyword">as</span> go</span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> requests.compat <span class="keyword">import</span> json <span class="keyword">as</span> _json</span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> DataFrameClient</span><br><span class="line"> </span><br><span class="line">app = Bottle()</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.hook('after_request')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enable_cors</span><span class="params">()</span>:</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Origin'</span>] = <span class="string">'*'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Methods'</span>] = <span class="string">'GET, POST, PUT, OPTIONS'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Headers'</span>] = <span class="string">'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.route('/data')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    client = DataFrameClient(<span class="string">'127.0.0.1'</span>, <span class="string">'8086'</span>, database=<span class="string">'dc'</span>)</span><br><span class="line">    res = client.query(<span class="string">'select sum(succ), sum(fail) from p group by host limit 10'</span>)</span><br><span class="line"> </span><br><span class="line">    data = []</span><br><span class="line">    <span class="keyword">for</span> metric, df <span class="keyword">in</span> res.items():</span><br><span class="line">        <span class="keyword">print</span> df</span><br><span class="line">        trace = go.Bar(</span><br><span class="line">            x=df[df.columns[<span class="number">0</span>]],</span><br><span class="line">            y=df[df.columns[<span class="number">1</span>]],</span><br><span class="line">            name=str(metric),</span><br><span class="line">        )</span><br><span class="line">        data.append(trace)</span><br><span class="line">    layout = go.Layout()</span><br><span class="line">    data_json = _json.dumps(data, cls=utils.PlotlyJSONEncoder)</span><br><span class="line">    layout_json = _json.dumps(layout, cls=utils.PlotlyJSONEncoder)</span><br><span class="line">    data_dict = json.loads(data_json)</span><br><span class="line">    layout_dict = json.loads(layout_json)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'records'</span>: data_dict, <span class="string">'layout'</span>: layout_dict&#125;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.route('/pie')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pie</span><span class="params">()</span>:</span></span><br><span class="line">    client = DataFrameClient(<span class="string">'127.0.0.1'</span>, <span class="string">'8086'</span>, database=<span class="string">'dc'</span>)</span><br><span class="line">    res = client.query(<span class="string">'select sum(succ), sum(fail) from p group by host limit 10'</span>)</span><br><span class="line"> </span><br><span class="line">    data = []</span><br><span class="line">    labels = []</span><br><span class="line">    pds = []</span><br><span class="line">    <span class="keyword">for</span> metric, df <span class="keyword">in</span> res.items():</span><br><span class="line">        <span class="keyword">print</span> metric, df</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'---------'</span>, df.columns, df.columns.values</span><br><span class="line">        labels.append(str(metric) + df.columns[<span class="number">0</span>])</span><br><span class="line">        labels.append(str(metric) + df.columns[<span class="number">1</span>])</span><br><span class="line">        pds.append(df[df.columns[<span class="number">0</span>]])</span><br><span class="line">        pds.append(df[df.columns[<span class="number">1</span>]])</span><br><span class="line">    trace = go.Pie(</span><br><span class="line">        labels=labels,</span><br><span class="line">        values=pd.concat(pds),</span><br><span class="line">        name=str(metric),</span><br><span class="line">    )</span><br><span class="line">    data.append(trace)</span><br><span class="line">    layout = go.Layout()</span><br><span class="line">    data_json = _json.dumps(data, cls=utils.PlotlyJSONEncoder)</span><br><span class="line">    layout_json = _json.dumps(layout, cls=utils.PlotlyJSONEncoder)</span><br><span class="line">    data_dict = json.loads(data_json)</span><br><span class="line">    layout_dict = json.loads(layout_json)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'records'</span>: data_dict, <span class="string">'layout'</span>: layout_dict&#125;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.route('/line')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">line</span><span class="params">()</span>:</span></span><br><span class="line">    client = DataFrameClient(<span class="string">'127.0.0.1'</span>, <span class="string">'8086'</span>, database=<span class="string">'dc'</span>)</span><br><span class="line">    res = client.query(<span class="string">'select sum(succ), sum(fail) from p where time &gt; now() - 1d and succ &gt; 0 group by time(1h) limit 10'</span>)</span><br><span class="line"> </span><br><span class="line">    data = []</span><br><span class="line">    <span class="keyword">for</span> metric, df <span class="keyword">in</span> res.items():</span><br><span class="line">        <span class="keyword">print</span> metric, df</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'---------'</span>, df.index</span><br><span class="line">        <span class="keyword">for</span> col <span class="keyword">in</span> df.columns.values:</span><br><span class="line">            trace = go.Scatter(</span><br><span class="line">                x=df.index,</span><br><span class="line">                y=df[col],</span><br><span class="line">                name=str(metric),</span><br><span class="line">            )</span><br><span class="line">            data.append(trace)</span><br><span class="line">    layout = go.Layout()</span><br><span class="line">    data_json = _json.dumps(data, cls=utils.PlotlyJSONEncoder)</span><br><span class="line">    layout_json = _json.dumps(layout, cls=utils.PlotlyJSONEncoder)</span><br><span class="line">    data_dict = json.loads(data_json)</span><br><span class="line">    layout_dict = json.loads(layout_json)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'records'</span>: data_dict, <span class="string">'layout'</span>: layout_dict&#125;</span><br><span class="line"> </span><br><span class="line">run(app, host=<span class="string">'localhost'</span>, port=<span class="number">8080</span>, debug=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="html"><a href="#html" class="headerlink" title="html"></a>html</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://code.jquery.com/jquery-3.2.1.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.plot.ly/plotly-latest.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"plot"</span> <span class="attr">style</span>=<span class="string">"width:90%;height:600px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"plot_query"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">makeplot</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        $.ajax(&#123;</span></span><br><span class="line"><span class="javascript">            url: <span class="string">'http://127.0.0.1:8080/pie'</span>,</span></span><br><span class="line"><span class="undefined">            data: &#123;</span></span><br><span class="line"><span class="undefined">            &#125;,</span></span><br><span class="line"><span class="javascript">            dataType: <span class="string">'json'</span>,</span></span><br><span class="line"><span class="javascript">            success: <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(result);</span></span><br><span class="line"><span class="javascript">                <span class="comment">//result = JSON.parse(result);</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(result.records);</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(result.layout);</span></span><br><span class="line"><span class="undefined">                makePlotly(result.query, result.records, result.layout);</span></span><br><span class="line"><span class="javascript">                <span class="built_in">document</span>.getElementById(<span class="string">"plot_query"</span>).innerHTML = result.query;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"> </span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">makePlotly</span>(<span class="params">title,  traces, layout</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> plotDiv = <span class="built_in">document</span>.getElementById(<span class="string">"plot"</span>);</span></span><br><span class="line"><span class="javascript">        Plotly.newPlot(<span class="string">'plot'</span>, traces, layout);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"> </span></span><br><span class="line"><span class="undefined">    makeplot();</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/python-bottle解决跨域问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/python-bottle解决跨域问题/" itemprop="url">
+                  python bottle解决跨域问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 11:32:00 / 修改时间：11:33:11" itemprop="dateCreated datePublished" datetime="2018-05-20T11:32:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="同意跨域"><a href="#同意跨域" class="headerlink" title="同意跨域"></a>同意跨域</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bottle <span class="keyword">import</span> route, run, template, Bottle, response</span><br><span class="line"> </span><br><span class="line">app = Bottle()</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.hook('after_request')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enable_cors</span><span class="params">()</span>:</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Origin'</span>] = <span class="string">'*'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Methods'</span>] = <span class="string">'GET, POST, PUT, OPTIONS'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Headers'</span>] = <span class="string">'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'</span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/django解决ajax提交时的csrf跨域问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/django解决ajax提交时的csrf跨域问题/" itemprop="url">
+                  django解决ajax提交时的csrf跨域问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 11:32:00 / 修改时间：11:32:32" itemprop="dateCreated datePublished" datetime="2018-05-20T11:32:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在js中添加代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// using jQuery</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cookieValue = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.cookie &amp;&amp; <span class="built_in">document</span>.cookie !== <span class="string">''</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie.split(<span class="string">';'</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cookies.length; i++) &#123;</span><br><span class="line">                <span class="keyword">var</span> cookie = jQuery.trim(cookies[i]);</span><br><span class="line">                <span class="comment">// Does this cookie string begin with the name we want?</span></span><br><span class="line">                <span class="keyword">if</span> (cookie.substring(<span class="number">0</span>, name.length + <span class="number">1</span>) === (name + <span class="string">'='</span>)) &#123;</span><br><span class="line">                    cookieValue = <span class="built_in">decodeURIComponent</span>(cookie.substring(name.length + <span class="number">1</span>));</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cookieValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> csrftoken = getCookie(<span class="string">'csrftoken'</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">csrfSafeMethod</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// these HTTP methods do not require CSRF protection</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.test(method));</span><br><span class="line">    &#125;</span><br><span class="line">    $.ajaxSetup(&#123;</span><br><span class="line">        beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="keyword">this</span>.crossDomain) &#123;</span><br><span class="line">                xhr.setRequestHeader(<span class="string">"X-CSRFToken"</span>, csrftoken);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/django使用pymysql访问mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/django使用pymysql访问mysql/" itemprop="url">
+                  django使用pymysql访问mysql
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 11:31:00 / 修改时间：11:31:51" itemprop="dateCreated datePublished" datetime="2018-05-20T11:31:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="在manage-py和wsgi-py顶部增加代码"><a href="#在manage-py和wsgi-py顶部增加代码" class="headerlink" title="在manage.py和wsgi.py顶部增加代码"></a>在manage.py和wsgi.py顶部增加代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line">pymysql.install_as_MySQLdb()</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/python出现证书错误-CERTIFICATE-VERIFY-FAILED/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/python出现证书错误-CERTIFICATE-VERIFY-FAILED/" itemprop="url">
+                  python出现证书错误 CERTIFICATE_VERIFY_FAILED
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 11:30:00 / 修改时间：11:31:14" itemprop="dateCreated datePublished" datetime="2018-05-20T11:30:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="django-cas或其它python程序，出现错误-CERTIFICATE-VERIFY-FAILED"><a href="#django-cas或其它python程序，出现错误-CERTIFICATE-VERIFY-FAILED" class="headerlink" title="django-cas或其它python程序，出现错误 CERTIFICATE_VERIFY_FAILED"></a>django-cas或其它python程序，出现错误 CERTIFICATE_VERIFY_FAILED</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed</span><br><span class="line"> </span><br><span class="line"># 增加代码，不检验自签名证书</span><br><span class="line">import ssl</span><br><span class="line">ssl._create_default_https_context = ssl._create_unverified_context</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/python-安装pip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/python-安装pip/" itemprop="url">
+                  python 安装pip
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 11:28:00 / 修改时间：11:28:42" itemprop="dateCreated datePublished" datetime="2018-05-20T11:28:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</span><br><span class="line">python get-pip.py</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/git基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lscy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lscy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/git基本操作/" itemprop="url">
+                  git基本操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-20 11:28:00 / 修改时间：11:30:18" itemprop="dateCreated datePublished" datetime="2018-05-20T11:28:00+08:00">2018-05-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="clone远端项目"><a href="#clone远端项目" class="headerlink" title="clone远端项目"></a>clone远端项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/jquery/jquery.git</span><br><span class="line">git <span class="built_in">clone</span> username@host:/path/to/repository</span><br></pre></td></tr></table></figure>
+<h3 id="远程主机"><a href="#远程主机" class="headerlink" title="远程主机"></a>远程主机</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 克隆版本库的时候，所使用的远程主机自动被Git命名为origin</span></span><br><span class="line">git remote -v</span><br><span class="line"><span class="comment"># 将你的仓库连接到某个远程服务器</span></span><br><span class="line">git remote add origin &lt;server&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="提交，拉取"><a href="#提交，拉取" class="headerlink" title="提交，拉取"></a>提交，拉取</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意，分支写法是&lt;来源地&gt;:&lt;目的地&gt;</span></span><br><span class="line"><span class="comment"># git fetch &lt;远程主机名&gt; &lt;分支名&gt;，使用"远程主机名/分支名"读取。比如origin主机的master：origin/master</span></span><br><span class="line">git fetch origin master</span><br><span class="line">git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</span><br><span class="line">git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/20/git基本操作/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -548,6 +1859,10 @@
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
 
 
           </div>
@@ -588,14 +1903,56 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">73</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
               
 
               
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
 
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
               
             </nav>
           
