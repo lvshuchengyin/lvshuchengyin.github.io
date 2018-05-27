@@ -140,6 +140,103 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python性能调试profile" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/python性能调试profile/">python性能调试profile</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/20/python性能调试profile/" class="archive-article-date">
+  	<time datetime="2018-05-20T03:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li>cProfile：基于lsprof的用C语言实现的扩展应用，运行开销比较合理，适合分析运行时间较长的程序</li>
+<li>profile：纯Python实现的性能分析模块，接口和cProfile一致。但在分析程序时增加了很大的运行开销。不过，如果想扩展profiler的功能，可以通过继承这个模块实现</li>
+</ul>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m cProfile -s cumulative test.py</span><br></pre></td></tr></table></figure>
+<h3 id="结果说明"><a href="#结果说明" class="headerlink" title="结果说明"></a>结果说明</h3><ul>
+<li>ncalls：表示函数调用的次数</li>
+<li>tottime：表示指定函数的总的运行时间，除掉函数中调用子函数的运行时间</li>
+<li>percall：（第一个percall）等于 tottime/ncalls</li>
+<li>cumtime：表示该函数及其所有子函数的调用运行的时间，即函数开始调用到返回的时间</li>
+<li>percall：（第二个percall）即函数运行一次的平均时间，等于 cumtime/ncalls</li>
+<li>filename:lineno(function)：每个函数调用的具体信息<br>另外，上面分析的时候，排序方式使用的是函数调用时间(cumulative)，<br>还有其它排序方式：calls, cumulative, file, line, module, name, nfl, pcalls, stdname, time</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/编程//" class="article-tag-list-link color3">编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/20/python性能调试profile/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-mysql外键约束关系说明" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -894,91 +991,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/05/20/linux-date命令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python设置日志翻滚" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/python设置日志翻滚/">python设置日志翻滚</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/20/python设置日志翻滚/" class="archive-article-date">
-  	<time datetime="2018-05-20T02:52:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="可翻滚的日志-logger-py"><a href="#可翻滚的日志-logger-py" class="headerlink" title="可翻滚的日志: logger.py"></a>可翻滚的日志: logger.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">from</span> logging.handlers <span class="keyword">import</span> RotatingFileHandler</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_full_path</span><span class="params">(local_path)</span>:</span></span><br><span class="line">    file_path = os.path.abspath(__file__)</span><br><span class="line">    base_path = os.path.dirname(file_path)</span><br><span class="line">    <span class="keyword">return</span> os.path.join(base_path, local_path)</span><br><span class="line">     </span><br><span class="line">LOG_LEVEL = logging.DEBUG</span><br><span class="line">LOG_FORMAT = <span class="string">'%(asctime)s %(levelname)s [%(filename)s:%(funcName)s:%(lineno)s] %(message)s'</span></span><br><span class="line">DATEFMT = <span class="string">'%Y-%m-%d %H:%M:%S'</span></span><br><span class="line">LOG_FILE_NAME = get_full_path(<span class="string">'logs/app.log'</span>)</span><br><span class="line">LOG_FILE_MAX_SIZE = <span class="number">10</span> * <span class="number">1024</span> * <span class="number">1024</span></span><br><span class="line">LOG_FILE_BACKUP_COUNT = <span class="number">5</span></span><br><span class="line"> </span><br><span class="line">formatter = logging.Formatter(LOG_FORMAT, datefmt=DATEFMT)</span><br><span class="line"> </span><br><span class="line">console = logging.StreamHandler()</span><br><span class="line">console.setFormatter(formatter)</span><br><span class="line"> </span><br><span class="line">rotate = RotatingFileHandler(LOG_FILE_NAME, maxBytes=LOG_FILE_MAX_SIZE, backupCount=LOG_FILE_BACKUP_COUNT)</span><br><span class="line">rotate.setFormatter(formatter)</span><br><span class="line"> </span><br><span class="line">logger = logging.getLogger(<span class="string">'app_common'</span>)</span><br><span class="line">logger.propagate = <span class="keyword">False</span></span><br><span class="line">logger.setLevel(LOG_LEVEL)</span><br><span class="line">logger.addHandler(console)</span><br><span class="line">logger.addHandler(rotate)</span><br></pre></td></tr></table></figure>
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> logger <span class="keyword">import</span> logger</span><br><span class="line"> </span><br><span class="line">logger.info(<span class="string">'log'</span>)</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/编程//" class="article-tag-list-link color3">编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/20/python设置日志翻滚/">展开全文 >></a>
         </p>
       
 
