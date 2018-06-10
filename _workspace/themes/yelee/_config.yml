@@ -10,8 +10,8 @@ menu:
   主页: /
   所有文章: /archives/
   #随笔: /tags/随笔
-  标签云: /tags/
-  关于我: /about/
+  #标签云: /tags/
+  #关于我: /about/
 
 # Link to your avatar | 填写头像地址
 avatar: /img/avatar.jpg
@@ -231,7 +231,7 @@ tab_title_change:
 ## https://github.com/PaicHyperionDev/hexo-generator-search
 search: 
   on: true
-  onload: false
+  onload: true
   ## true: get search.xml file when the page has loaded
   ## false: get the file when search box gets focus
 
@@ -245,7 +245,7 @@ mathjax: false
 
 # Socail Share | 是否开启分享
 share: 
-  on: true
+  on: false
   baidu: true
   addthis: false
   addthis_pubid: "ra-56ff76c972fc0cf9"
