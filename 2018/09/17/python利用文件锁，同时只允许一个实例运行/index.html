@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="可翻滚的日志: logger.py123456789101112131415161718192021222324252627282930# -*- coding: utf-8 -*-import osimport loggingfrom logging.handlers import RotatingFileHandler def get_full_path(local_path):    fil">
+<meta name="description" content="使用文件锁，支持linux和windows1234567891011121314151617181920212223242526272829303132333435363738import osimport sysimport timeimport logginglogger = loggingclass SingleInstance:    def __init__(self):">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python设置日志翻滚">
-<meta property="og:url" content="https://simpledao.win/2018/05/20/python设置日志翻滚/index.html">
+<meta property="og:title" content="python利用文件锁，同时只允许一个实例运行">
+<meta property="og:url" content="https://simpledao.win/2018/09/17/python利用文件锁，同时只允许一个实例运行/index.html">
 <meta property="og:site_name" content="Lscy">
-<meta property="og:description" content="可翻滚的日志: logger.py123456789101112131415161718192021222324252627282930# -*- coding: utf-8 -*-import osimport loggingfrom logging.handlers import RotatingFileHandler def get_full_path(local_path):    fil">
+<meta property="og:description" content="使用文件锁，支持linux和windows1234567891011121314151617181920212223242526272829303132333435363738import osimport sysimport timeimport logginglogger = loggingclass SingleInstance:    def __init__(self):">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-20T02:52:57.542Z">
+<meta property="og:updated_time" content="2018-09-17T01:45:05.061Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python设置日志翻滚">
-<meta name="twitter:description" content="可翻滚的日志: logger.py123456789101112131415161718192021222324252627282930# -*- coding: utf-8 -*-import osimport loggingfrom logging.handlers import RotatingFileHandler def get_full_path(local_path):    fil">
+<meta name="twitter:title" content="python利用文件锁，同时只允许一个实例运行">
+<meta name="twitter:description" content="使用文件锁，支持linux和windows1234567891011121314151617181920212223242526272829303132333435363738import osimport sysimport timeimport logginglogger = loggingclass SingleInstance:    def __init__(self):">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>python设置日志翻滚 | Lscy</title>
+<title>python利用文件锁，同时只允许一个实例运行 | Lscy</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -247,11 +247,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-python设置日志翻滚" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-python利用文件锁，同时只允许一个实例运行" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/05/20/python设置日志翻滚/" class="article-date">
-      <time datetime="2018-05-20T02:52:00.000Z" itemprop="datePublished">2018-05-20</time>
+      <a href="/2018/09/17/python利用文件锁，同时只允许一个实例运行/" class="article-date">
+      <time datetime="2018-09-17T01:43:00.000Z" itemprop="datePublished">2018-09-17</time>
 </a>
 
 
@@ -266,7 +266,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      python设置日志翻滚
+      python利用文件锁，同时只允许一个实例运行
     </h1>
   
 
@@ -291,8 +291,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="可翻滚的日志-logger-py"><a href="#可翻滚的日志-logger-py" class="headerlink" title="可翻滚的日志: logger.py"></a>可翻滚的日志: logger.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">from</span> logging.handlers <span class="keyword">import</span> RotatingFileHandler</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_full_path</span><span class="params">(local_path)</span>:</span></span><br><span class="line">    file_path = os.path.abspath(__file__)</span><br><span class="line">    base_path = os.path.dirname(file_path)</span><br><span class="line">    <span class="keyword">return</span> os.path.join(base_path, local_path)</span><br><span class="line">     </span><br><span class="line">LOG_LEVEL = logging.DEBUG</span><br><span class="line">LOG_FORMAT = <span class="string">'%(asctime)s %(levelname)s [%(filename)s:%(funcName)s:%(lineno)s] %(message)s'</span></span><br><span class="line">DATEFMT = <span class="string">'%Y-%m-%d %H:%M:%S'</span></span><br><span class="line">LOG_FILE_NAME = get_full_path(<span class="string">'logs/app.log'</span>)</span><br><span class="line">LOG_FILE_MAX_SIZE = <span class="number">10</span> * <span class="number">1024</span> * <span class="number">1024</span></span><br><span class="line">LOG_FILE_BACKUP_COUNT = <span class="number">5</span></span><br><span class="line"> </span><br><span class="line">formatter = logging.Formatter(LOG_FORMAT, datefmt=DATEFMT)</span><br><span class="line"> </span><br><span class="line">console = logging.StreamHandler()</span><br><span class="line">console.setFormatter(formatter)</span><br><span class="line"> </span><br><span class="line">rotate = RotatingFileHandler(LOG_FILE_NAME, maxBytes=LOG_FILE_MAX_SIZE, backupCount=LOG_FILE_BACKUP_COUNT)</span><br><span class="line">rotate.setFormatter(formatter)</span><br><span class="line"> </span><br><span class="line">logger = logging.getLogger(<span class="string">'app_common'</span>)</span><br><span class="line">logger.propagate = <span class="keyword">False</span></span><br><span class="line">logger.setLevel(LOG_LEVEL)</span><br><span class="line">logger.addHandler(console)</span><br><span class="line">logger.addHandler(rotate)</span><br></pre></td></tr></table></figure>
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> logger <span class="keyword">import</span> logger</span><br><span class="line"> </span><br><span class="line">logger.info(<span class="string">'log'</span>)</span><br></pre></td></tr></table></figure>
+        <h3 id="使用文件锁，支持linux和windows"><a href="#使用文件锁，支持linux和windows" class="headerlink" title="使用文件锁，支持linux和windows"></a>使用文件锁，支持linux和windows</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logger = logging</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SingleInstance</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        py_file_path = os.path.abspath(__file__)</span><br><span class="line">        basepath = os.path.dirname(py_file_path)</span><br><span class="line">        self.lockfile = os.path.normpath(basepath + <span class="string">'/'</span> + os.path.basename(__file__) + <span class="string">'.lock'</span>)</span><br><span class="line">        <span class="keyword">if</span> sys.platform == <span class="string">'win32'</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># file already exists, we try to remove (in case previous execution was interrupted)</span></span><br><span class="line">                <span class="keyword">if</span> os.path.exists(self.lockfile):</span><br><span class="line">                    os.unlink(self.lockfile)</span><br><span class="line"></span><br><span class="line">                self.fd = os.open(self.lockfile, os.O_CREAT | os.O_EXCL | os.O_RDWR)</span><br><span class="line">            <span class="keyword">except</span> OSError <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">if</span> e.errno == <span class="number">13</span>:</span><br><span class="line">                    logger.error(<span class="string">"Another instance is already running, quit."</span>)</span><br><span class="line">                    sys.exit(<span class="number">-1</span>)</span><br><span class="line">                <span class="keyword">raise</span> e</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># non Windows</span></span><br><span class="line">            <span class="keyword">import</span> fcntl</span><br><span class="line"></span><br><span class="line">            self.fp = open(self.lockfile, <span class="string">'w'</span>)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                fcntl.lockf(self.fp, fcntl.LOCK_EX | fcntl.LOCK_NB)</span><br><span class="line">            <span class="keyword">except</span> IOError:</span><br><span class="line">                logger.error(<span class="string">"Another instance is already running, quit."</span>)</span><br><span class="line">                sys.exit(<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    instance = SingleInstance()</span><br><span class="line">    time.sleep(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -303,16 +302,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2018/05/20/linux-date命令/">
-                    linux date命令
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018/05/20/curl/">
-                    curl
+                <a href="/2018/09/17/hbase操作/">
+                    hbase操作
                 </a>
             </div>
         
@@ -324,7 +317,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#可翻滚的日志-logger-py"><span class="toc-number">1.</span> <span class="toc-text">可翻滚的日志: logger.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用方法"><span class="toc-number">2.</span> <span class="toc-text">使用方法</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用文件锁，支持linux和windows"><span class="toc-number">1.</span> <span class="toc-text">使用文件锁，支持linux和windows</span></a></li></ol>
         
     </div>
     <style>
@@ -355,15 +348,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/05/20/linux-date命令/" title="上一篇: linux date命令">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/05/20/curl/" title="下一篇: curl">
+            <a href="/2018/09/17/hbase操作/" title="下一篇: hbase操作">
                 <i class="fa fa-angle-right"></i>
             </a>
         

@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title>python利用文件锁，同时只允许一个实例运行</title>
+      <link href="/2018/09/17/python%E5%88%A9%E7%94%A8%E6%96%87%E4%BB%B6%E9%94%81%EF%BC%8C%E5%90%8C%E6%97%B6%E5%8F%AA%E5%85%81%E8%AE%B8%E4%B8%80%E4%B8%AA%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C/"/>
+      <url>/2018/09/17/python%E5%88%A9%E7%94%A8%E6%96%87%E4%BB%B6%E9%94%81%EF%BC%8C%E5%90%8C%E6%97%B6%E5%8F%AA%E5%85%81%E8%AE%B8%E4%B8%80%E4%B8%AA%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C/</url>
+      <content type="html"><![CDATA[<h3 id="使用文件锁，支持linux和windows"><a href="#使用文件锁，支持linux和windows" class="headerlink" title="使用文件锁，支持linux和windows"></a>使用文件锁，支持linux和windows</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logger = logging</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SingleInstance</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        py_file_path = os.path.abspath(__file__)</span><br><span class="line">        basepath = os.path.dirname(py_file_path)</span><br><span class="line">        self.lockfile = os.path.normpath(basepath + <span class="string">'/'</span> + os.path.basename(__file__) + <span class="string">'.lock'</span>)</span><br><span class="line">        <span class="keyword">if</span> sys.platform == <span class="string">'win32'</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># file already exists, we try to remove (in case previous execution was interrupted)</span></span><br><span class="line">                <span class="keyword">if</span> os.path.exists(self.lockfile):</span><br><span class="line">                    os.unlink(self.lockfile)</span><br><span class="line"></span><br><span class="line">                self.fd = os.open(self.lockfile, os.O_CREAT | os.O_EXCL | os.O_RDWR)</span><br><span class="line">            <span class="keyword">except</span> OSError <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">if</span> e.errno == <span class="number">13</span>:</span><br><span class="line">                    logger.error(<span class="string">"Another instance is already running, quit."</span>)</span><br><span class="line">                    sys.exit(<span class="number">-1</span>)</span><br><span class="line">                <span class="keyword">raise</span> e</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># non Windows</span></span><br><span class="line">            <span class="keyword">import</span> fcntl</span><br><span class="line"></span><br><span class="line">            self.fp = open(self.lockfile, <span class="string">'w'</span>)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                fcntl.lockf(self.fp, fcntl.LOCK_EX | fcntl.LOCK_NB)</span><br><span class="line">            <span class="keyword">except</span> IOError:</span><br><span class="line">                logger.error(<span class="string">"Another instance is already running, quit."</span>)</span><br><span class="line">                sys.exit(<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    instance = SingleInstance()</span><br><span class="line">    time.sleep(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>hbase操作</title>
       <link href="/2018/09/17/hbase%E6%93%8D%E4%BD%9C/"/>
       <url>/2018/09/17/hbase%E6%93%8D%E4%BD%9C/</url>
@@ -159,10 +180,10 @@
     </entry>
     
     <entry>
-      <title>python bottle解决跨域问题</title>
-      <link href="/2018/05/20/python-bottle%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
-      <url>/2018/05/20/python-bottle%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
-      <content type="html"><![CDATA[<h3 id="同意跨域"><a href="#同意跨域" class="headerlink" title="同意跨域"></a>同意跨域</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bottle <span class="keyword">import</span> route, run, template, Bottle, response</span><br><span class="line"> </span><br><span class="line">app = Bottle()</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.hook('after_request')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enable_cors</span><span class="params">()</span>:</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Origin'</span>] = <span class="string">'*'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Methods'</span>] = <span class="string">'GET, POST, PUT, OPTIONS'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Headers'</span>] = <span class="string">'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'</span></span><br></pre></td></tr></table></figure>]]></content>
+      <title>django解决ajax提交时的csrf跨域问题</title>
+      <link href="/2018/05/20/django%E8%A7%A3%E5%86%B3ajax%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84csrf%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
+      <url>/2018/05/20/django%E8%A7%A3%E5%86%B3ajax%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84csrf%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p>在js中添加代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// using jQuery</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cookieValue = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.cookie &amp;&amp; <span class="built_in">document</span>.cookie !== <span class="string">''</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie.split(<span class="string">';'</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cookies.length; i++) &#123;</span><br><span class="line">                <span class="keyword">var</span> cookie = jQuery.trim(cookies[i]);</span><br><span class="line">                <span class="comment">// Does this cookie string begin with the name we want?</span></span><br><span class="line">                <span class="keyword">if</span> (cookie.substring(<span class="number">0</span>, name.length + <span class="number">1</span>) === (name + <span class="string">'='</span>)) &#123;</span><br><span class="line">                    cookieValue = <span class="built_in">decodeURIComponent</span>(cookie.substring(name.length + <span class="number">1</span>));</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cookieValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> csrftoken = getCookie(<span class="string">'csrftoken'</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">csrfSafeMethod</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// these HTTP methods do not require CSRF protection</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.test(method));</span><br><span class="line">    &#125;</span><br><span class="line">    $.ajaxSetup(&#123;</span><br><span class="line">        beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="keyword">this</span>.crossDomain) &#123;</span><br><span class="line">                xhr.setRequestHeader(<span class="string">"X-CSRFToken"</span>, csrftoken);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>]]></content>
       
       <categories>
           
@@ -180,10 +201,10 @@
     </entry>
     
     <entry>
-      <title>django解决ajax提交时的csrf跨域问题</title>
-      <link href="/2018/05/20/django%E8%A7%A3%E5%86%B3ajax%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84csrf%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
-      <url>/2018/05/20/django%E8%A7%A3%E5%86%B3ajax%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84csrf%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
-      <content type="html"><![CDATA[<p>在js中添加代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// using jQuery</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cookieValue = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.cookie &amp;&amp; <span class="built_in">document</span>.cookie !== <span class="string">''</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie.split(<span class="string">';'</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cookies.length; i++) &#123;</span><br><span class="line">                <span class="keyword">var</span> cookie = jQuery.trim(cookies[i]);</span><br><span class="line">                <span class="comment">// Does this cookie string begin with the name we want?</span></span><br><span class="line">                <span class="keyword">if</span> (cookie.substring(<span class="number">0</span>, name.length + <span class="number">1</span>) === (name + <span class="string">'='</span>)) &#123;</span><br><span class="line">                    cookieValue = <span class="built_in">decodeURIComponent</span>(cookie.substring(name.length + <span class="number">1</span>));</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cookieValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> csrftoken = getCookie(<span class="string">'csrftoken'</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">csrfSafeMethod</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// these HTTP methods do not require CSRF protection</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.test(method));</span><br><span class="line">    &#125;</span><br><span class="line">    $.ajaxSetup(&#123;</span><br><span class="line">        beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="keyword">this</span>.crossDomain) &#123;</span><br><span class="line">                xhr.setRequestHeader(<span class="string">"X-CSRFToken"</span>, csrftoken);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>]]></content>
+      <title>python bottle解决跨域问题</title>
+      <link href="/2018/05/20/python-bottle%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
+      <url>/2018/05/20/python-bottle%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<h3 id="同意跨域"><a href="#同意跨域" class="headerlink" title="同意跨域"></a>同意跨域</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bottle <span class="keyword">import</span> route, run, template, Bottle, response</span><br><span class="line"> </span><br><span class="line">app = Bottle()</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.hook('after_request')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enable_cors</span><span class="params">()</span>:</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Origin'</span>] = <span class="string">'*'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Methods'</span>] = <span class="string">'GET, POST, PUT, OPTIONS'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Headers'</span>] = <span class="string">'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'</span></span><br></pre></td></tr></table></figure>]]></content>
       
       <categories>
           
@@ -560,27 +581,6 @@
     </entry>
     
     <entry>
-      <title>ssh免密码登录</title>
-      <link href="/2018/05/20/ssh%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/"/>
-      <url>/2018/05/20/ssh%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/</url>
-      <content type="html"><![CDATA[<h3 id="生成公私密钥"><a href="#生成公私密钥" class="headerlink" title="生成公私密钥"></a>生成公私密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line"><span class="comment"># 提示输入的话直接回车即可</span></span><br><span class="line"><span class="comment"># 生成的密钥在~/.ssh/，公钥：id_rsa.pub，私钥：id_rsa</span></span><br></pre></td></tr></table></figure><h3 id="将公钥设置到目标机器"><a href="#将公钥设置到目标机器" class="headerlink" title="将公钥设置到目标机器"></a>将公钥设置到目标机器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加公钥到authorized_keys</span></span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line"><span class="comment"># 修改authorized_keys权限</span></span><br><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>]]></content>
-      
-      <categories>
-          
-          <category> 编程 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> linux </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
       <title>ambari安装</title>
       <link href="/2018/05/20/ambari%E5%AE%89%E8%A3%85/"/>
       <url>/2018/05/20/ambari%E5%AE%89%E8%A3%85/</url>
@@ -596,6 +596,27 @@
         <tags>
             
             <tag> 服务组件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>ssh免密码登录</title>
+      <link href="/2018/05/20/ssh%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/"/>
+      <url>/2018/05/20/ssh%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/</url>
+      <content type="html"><![CDATA[<h3 id="生成公私密钥"><a href="#生成公私密钥" class="headerlink" title="生成公私密钥"></a>生成公私密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line"><span class="comment"># 提示输入的话直接回车即可</span></span><br><span class="line"><span class="comment"># 生成的密钥在~/.ssh/，公钥：id_rsa.pub，私钥：id_rsa</span></span><br></pre></td></tr></table></figure><h3 id="将公钥设置到目标机器"><a href="#将公钥设置到目标机器" class="headerlink" title="将公钥设置到目标机器"></a>将公钥设置到目标机器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加公钥到authorized_keys</span></span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line"><span class="comment"># 修改authorized_keys权限</span></span><br><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
             
         </tags>
       
@@ -959,27 +980,6 @@
     </entry>
     
     <entry>
-      <title>flask wtf form template渲染</title>
-      <link href="/2018/05/20/flask-wtf-form-template%E6%B8%B2%E6%9F%93/"/>
-      <url>/2018/05/20/flask-wtf-form-template%E6%B8%B2%E6%9F%93/</url>
-      <content type="html"><![CDATA[<p>flask wtf form template渲染<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">""</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">role</span>=<span class="string">"form"</span> <span class="attr">class</span>=<span class="string">"admin-form form-horizontal"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    &#123;&#123; task_form.csrf_token &#125;&#125;</span><br><span class="line"> </span><br><span class="line">    &#123;&#123; task_form.hidden_tag() &#125;&#125;</span><br><span class="line"> </span><br><span class="line">    &#123;% for field, widget in task_form._fields.iteritems() %&#125;</span><br><span class="line">        &#123;% if field != "csrf_token" %&#125;</span><br><span class="line">            <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"col-md-offset-2"</span> <span class="attr">style</span>=<span class="string">"color:red"</span>&gt;</span></span><br><span class="line">                &#123;&#123; ', '.join(task_form.errors[field]) &#125;&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">                &#123;&#123; task_form[field].label(class="col-md-2 control-label") &#125;&#125;</span><br><span class="line"> </span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-10"</span>&gt;</span></span><br><span class="line">                    &#123;&#123; task_form[field](class="form-control") &#125;&#125;</span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        &#123;% endif %&#125;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-offset-2 col-md-10 submit-row"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary"</span> <span class="attr">value</span>=<span class="string">"保存"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></p>]]></content>
-      
-      <categories>
-          
-          <category> 编程 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
       <title>beeline连接</title>
       <link href="/2018/05/20/beeline%E8%BF%9E%E6%8E%A5/"/>
       <url>/2018/05/20/beeline%E8%BF%9E%E6%8E%A5/</url>
@@ -995,6 +995,27 @@
         <tags>
             
             <tag> 服务组件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>flask wtf form template渲染</title>
+      <link href="/2018/05/20/flask-wtf-form-template%E6%B8%B2%E6%9F%93/"/>
+      <url>/2018/05/20/flask-wtf-form-template%E6%B8%B2%E6%9F%93/</url>
+      <content type="html"><![CDATA[<p>flask wtf form template渲染<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">""</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">role</span>=<span class="string">"form"</span> <span class="attr">class</span>=<span class="string">"admin-form form-horizontal"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    &#123;&#123; task_form.csrf_token &#125;&#125;</span><br><span class="line"> </span><br><span class="line">    &#123;&#123; task_form.hidden_tag() &#125;&#125;</span><br><span class="line"> </span><br><span class="line">    &#123;% for field, widget in task_form._fields.iteritems() %&#125;</span><br><span class="line">        &#123;% if field != "csrf_token" %&#125;</span><br><span class="line">            <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"col-md-offset-2"</span> <span class="attr">style</span>=<span class="string">"color:red"</span>&gt;</span></span><br><span class="line">                &#123;&#123; ', '.join(task_form.errors[field]) &#125;&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">                &#123;&#123; task_form[field].label(class="col-md-2 control-label") &#125;&#125;</span><br><span class="line"> </span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-10"</span>&gt;</span></span><br><span class="line">                    &#123;&#123; task_form[field](class="form-control") &#125;&#125;</span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        &#123;% endif %&#125;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-offset-2 col-md-10 submit-row"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary"</span> <span class="attr">value</span>=<span class="string">"保存"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></p>]]></content>
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
             
         </tags>
       
@@ -1148,27 +1169,6 @@
     </entry>
     
     <entry>
-      <title>pyinstller打包</title>
-      <link href="/2018/05/20/pyinstller%E6%89%93%E5%8C%85/"/>
-      <url>/2018/05/20/pyinstller%E6%89%93%E5%8C%85/</url>
-      <content type="html"><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyinstaller</span><br></pre></td></tr></table></figure><a id="more"></a><h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#构建前清除缓存和临时文件</span><br><span class="line">--clean </span><br><span class="line">#指定日志级别 DEBUG, INFO, WARN, ERROR, CRITICAL</span><br><span class="line">--log-level </span><br><span class="line">#构建的可执行文件和其它依赖文件放在同一个目录下（默认值）</span><br><span class="line">-D, --onedir </span><br><span class="line">#全部依赖都包到一个巨大的exe文件中，不过经过实践，有时候windows会报格式错误，造成程序无法执行</span><br><span class="line">-F, --onefile </span><br><span class="line">#指定程序名称</span><br><span class="line">-n NAME, --name NAME </span><br><span class="line">#设置搜索的导入路径，可以用路径分隔符，windows用分号，linux用冒号，分隔指定多个目录，也可以使用多个-p分别指定</span><br><span class="line">-p DIR, --paths DIR </span><br><span class="line">#不使用upx去压缩文件，因为经过实践，有时候windows会报格式错误，造成程序无法执行</span><br><span class="line">--noupx </span><br><span class="line">#默认会打开控制台显示标准输出</span><br><span class="line">-c, --console, --nowindowed </span><br><span class="line">#不显示控制台，制作窗口程序</span><br><span class="line">-w, --windowed, --noconsole </span><br><span class="line">#Any Shared Assemblies bundled into the application will be changed into Private Assemblies. </span><br><span class="line">#This means the exact versions of these assemblies will always be used, </span><br><span class="line">#and any newer versions installed on user machines at the system level will be ignored. </span><br><span class="line">#只会使用私有的动态链接库</span><br><span class="line">--win-private-assemblies </span><br><span class="line">#指定程序图标</span><br><span class="line">--icon</span><br></pre></td></tr></table></figure><h3 id="打包pyqt5的示例"><a href="#打包pyqt5的示例" class="headerlink" title="打包pyqt5的示例"></a>打包pyqt5的示例</h3><p>由于pyqt5只支持python3.5以上，并且pyinstaller支持3.5，则选用python3.5，另外py2exe不支持3.5，因此无法用py2exe打包pyqt5。</p><p>pyinstaller -w –noupx –clean –win-private-assemblies –path C:\Users\P\AppData\Local\Programs\Python\Python35-32\Lib\site-packages\PyQt5\Qt\bin main.py<br>出现error loading dll python35.dll error code=193，很可能是因为dll32位和64位不对应，或者是缺少dll，例如api-ms-win-crt*开头的dll</p><p><a href="http://stackoverflow.com/questions/33265663/api-ms-win-crt-runtime-l1-1-0-dll-is-missing-when-opening-microsoft-office-file" target="_blank" rel="noopener">http://stackoverflow.com/questions/33265663/api-ms-win-crt-runtime-l1-1-0-dll-is-missing-when-opening-microsoft-office-file</a></p>]]></content>
-      
-      <categories>
-          
-          <category> 编程 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
       <title>hive执行设置参数</title>
       <link href="/2018/05/20/hive%E6%89%A7%E8%A1%8C%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0/"/>
       <url>/2018/05/20/hive%E6%89%A7%E8%A1%8C%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0/</url>
@@ -1184,6 +1184,27 @@
         <tags>
             
             <tag> 服务组件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>pyinstller打包</title>
+      <link href="/2018/05/20/pyinstller%E6%89%93%E5%8C%85/"/>
+      <url>/2018/05/20/pyinstller%E6%89%93%E5%8C%85/</url>
+      <content type="html"><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyinstaller</span><br></pre></td></tr></table></figure><a id="more"></a><h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#构建前清除缓存和临时文件</span><br><span class="line">--clean </span><br><span class="line">#指定日志级别 DEBUG, INFO, WARN, ERROR, CRITICAL</span><br><span class="line">--log-level </span><br><span class="line">#构建的可执行文件和其它依赖文件放在同一个目录下（默认值）</span><br><span class="line">-D, --onedir </span><br><span class="line">#全部依赖都包到一个巨大的exe文件中，不过经过实践，有时候windows会报格式错误，造成程序无法执行</span><br><span class="line">-F, --onefile </span><br><span class="line">#指定程序名称</span><br><span class="line">-n NAME, --name NAME </span><br><span class="line">#设置搜索的导入路径，可以用路径分隔符，windows用分号，linux用冒号，分隔指定多个目录，也可以使用多个-p分别指定</span><br><span class="line">-p DIR, --paths DIR </span><br><span class="line">#不使用upx去压缩文件，因为经过实践，有时候windows会报格式错误，造成程序无法执行</span><br><span class="line">--noupx </span><br><span class="line">#默认会打开控制台显示标准输出</span><br><span class="line">-c, --console, --nowindowed </span><br><span class="line">#不显示控制台，制作窗口程序</span><br><span class="line">-w, --windowed, --noconsole </span><br><span class="line">#Any Shared Assemblies bundled into the application will be changed into Private Assemblies. </span><br><span class="line">#This means the exact versions of these assemblies will always be used, </span><br><span class="line">#and any newer versions installed on user machines at the system level will be ignored. </span><br><span class="line">#只会使用私有的动态链接库</span><br><span class="line">--win-private-assemblies </span><br><span class="line">#指定程序图标</span><br><span class="line">--icon</span><br></pre></td></tr></table></figure><h3 id="打包pyqt5的示例"><a href="#打包pyqt5的示例" class="headerlink" title="打包pyqt5的示例"></a>打包pyqt5的示例</h3><p>由于pyqt5只支持python3.5以上，并且pyinstaller支持3.5，则选用python3.5，另外py2exe不支持3.5，因此无法用py2exe打包pyqt5。</p><p>pyinstaller -w –noupx –clean –win-private-assemblies –path C:\Users\P\AppData\Local\Programs\Python\Python35-32\Lib\site-packages\PyQt5\Qt\bin main.py<br>出现error loading dll python35.dll error code=193，很可能是因为dll32位和64位不对应，或者是缺少dll，例如api-ms-win-crt*开头的dll</p><p><a href="http://stackoverflow.com/questions/33265663/api-ms-win-crt-runtime-l1-1-0-dll-is-missing-when-opening-microsoft-office-file" target="_blank" rel="noopener">http://stackoverflow.com/questions/33265663/api-ms-win-crt-runtime-l1-1-0-dll-is-missing-when-opening-microsoft-office-file</a></p>]]></content>
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
             
         </tags>
       
