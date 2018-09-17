@@ -247,6 +247,199 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-scp" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/scp/" class="article-date">
+      <time datetime="2018-05-20T02:55:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/scp/">scp</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>-P: 指定端口<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -P 1027 -r /e/code/tmp account@192.168.1.102:/home/account/code/tmp</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-python-时间格式转换" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/python-时间格式转换/" class="article-date">
+      <time datetime="2018-05-20T02:54:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/python-时间格式转换/">python 时间格式转换</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="datetime和str"><a href="#datetime和str" class="headerlink" title="datetime和str"></a>datetime和str</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># str转datetime</span></span><br><span class="line">datetime.datetime.strptime(<span class="string">'2017-04-23 00:00:00'</span>, <span class="string">'%Y-%m-%d %H:%M:%S'</span>)</span><br><span class="line"><span class="comment"># datetime转str</span></span><br><span class="line">datetime.datetime.now().strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>);</span><br><span class="line"><span class="comment"># datetime转timestamp</span></span><br><span class="line">time.mktime(dt.timetuple())</span><br></pre></td></tr></table></figure>
+<h3 id="utc时间转本地时间"><a href="#utc时间转本地时间" class="headerlink" title="utc时间转本地时间"></a>utc时间转本地时间</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from_zone = tz.tzutc()</span><br><span class="line">to_zone = tz.tzlocal()</span><br><span class="line">utc = datetime.strptime(utcs, <span class="string">'%Y-%m-%dT%H:%M:%SZ'</span>)</span><br><span class="line">utc = utc.replace(tzinfo=from_zone)</span><br><span class="line">local_dt = utc.astimezone(to_zone)</span><br><span class="line">dts = local_dt.strftime(<span class="string">'%Y-%m-%d %H:%M'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="datetime转timestamp"><a href="#datetime转timestamp" class="headerlink" title="datetime转timestamp"></a>datetime转timestamp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">datetime.fromtimestamp(ts)</span><br><span class="line">datetime.utcfromtimestamp(ts)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-linux-date命令" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/linux-date命令/" class="article-date">
+      <time datetime="2018-05-20T02:53:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/linux-date命令/">linux date命令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="date格式化"><a href="#date格式化" class="headerlink" title="date格式化"></a>date格式化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date +%Y-%m-%dT%H:%M:%S</span><br></pre></td></tr></table></figure>
+<h3 id="昨天"><a href="#昨天" class="headerlink" title="昨天"></a>昨天</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date -d <span class="string">"yesterday 13:00"</span> <span class="string">'+%Y-%m-%d'</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-python设置日志翻滚" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -597,7 +790,11 @@
       
           
         <h3 id="查看topic列表"><a href="#查看topic列表" class="headerlink" title="查看topic列表"></a>查看topic列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics --zookeeper 127.0.0.1 --list</span><br></pre></td></tr></table></figure>
+<h3 id="创建topic"><a href="#创建topic" class="headerlink" title="创建topic"></a>创建topic</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --create --zookeeper 127.0.0.1:2181/kafkastreaming --replication-factor 2 --partitions 24 --topic <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<h3 id="删除topic"><a href="#删除topic" class="headerlink" title="删除topic"></a>删除topic</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --delete --zookeeper 127.0.0.1:2181/kafkastreaming --topic <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 <h3 id="修改分区数"><a href="#修改分区数" class="headerlink" title="修改分区数"></a>修改分区数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics --zookeeper 127.0.0.1  --alter --topic topic1 --partitions 16</span><br></pre></td></tr></table></figure>
+<h3 id="生产"><a href="#生产" class="headerlink" title="生产"></a>生产</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-producer.sh --broker-list 127.0.0.1:9092 --topic <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<h3 id="消费"><a href="#消费" class="headerlink" title="消费"></a>消费</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic <span class="built_in">test</span> --from-beginning</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -676,204 +873,6 @@
       
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-airflow配置" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/airflow配置/" class="article-date">
-      <time datetime="2018-05-20T02:46:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/airflow配置/">airflow配置</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="修改数据库为mysql"><a href="#修改数据库为mysql" class="headerlink" title="修改数据库为mysql"></a>修改数据库为mysql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_alchemy_conn = mysql://root:123@localhost:3066/airflow?charset=utf8</span><br></pre></td></tr></table></figure>
-<h3 id="修改celery的broker为redis"><a href="#修改celery的broker为redis" class="headerlink" title="修改celery的broker为redis"></a>修改celery的broker为redis</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">broker_url = redis://localhost:6379/0</span><br><span class="line"># rabbitmq: amqp://guest:guest@localhost:5672//</span><br><span class="line">celery_result_backend =  redis://localhost:6379/0</span><br></pre></td></tr></table></figure>
-<h3 id="添加user"><a href="#添加user" class="headerlink" title="添加user"></a>添加user</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> airflow</span><br><span class="line"><span class="keyword">from</span> airflow <span class="keyword">import</span> models, settings</span><br><span class="line"><span class="keyword">from</span> airflow.contrib.auth.backends.password_auth <span class="keyword">import</span> PasswordUser</span><br><span class="line">user = PasswordUser(models.User())</span><br><span class="line">user.username = <span class="string">'test_user'</span></span><br><span class="line">user.email = <span class="string">'test_user@example.com'</span></span><br><span class="line">user.password = <span class="string">'test_user'</span></span><br><span class="line">session = settings.Session()</span><br><span class="line">session.add(user)</span><br><span class="line">session.commit()</span><br><span class="line">session.close()</span><br><span class="line">exit()</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务组件/">服务组件</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-windows挂载ubuntu的nfs盘" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/windows挂载ubuntu的nfs盘/" class="article-date">
-      <time datetime="2018-05-20T02:44:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/windows挂载ubuntu的nfs盘/">windows挂载ubuntu的nfs盘</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="安装Ubuntu-nfs"><a href="#安装Ubuntu-nfs" class="headerlink" title="安装Ubuntu nfs"></a>安装Ubuntu nfs</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nfs-kernel-server</span><br></pre></td></tr></table></figure>
-<h3 id="配置-etc-exports"><a href="#配置-etc-exports" class="headerlink" title="配置/etc/exports"></a>配置/etc/exports</h3><p>允许挂载的目录及权限在文件/etc/exports中进行定义。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 例如要共享目录/var/www，需要在/etc/exports文件末尾添加如下一行</span></span><br><span class="line">/var/www *(rw,sync,no_root_squash)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># /var/www是要共享的目录</span></span><br><span class="line"><span class="comment"># *代表允许所有的网络段访问</span></span><br><span class="line"><span class="comment"># rw是可读写权限</span></span><br><span class="line"><span class="comment"># sync是资料同步写入内存和硬盘</span></span><br><span class="line"><span class="comment"># no_root_squash是Ubuntu nfs客户端分享目录使用者的权限,</span></span><br><span class="line"><span class="comment">#    如果客户端使用的是root用户，那么对于该共享目录而言，该客户端就具有root权限</span></span><br></pre></td></tr></table></figure></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/">windows</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/05/20/windows挂载ubuntu的nfs盘/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-shadowshocks配置" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/shadowshocks配置/" class="article-date">
-      <time datetime="2018-05-20T02:42:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/shadowshocks配置/">shadowshocks配置</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -p 6001 -k 123456abc -m aes-256-cfb -s 0.0.0.0 -v</span><br></pre></td></tr></table></figure>
-<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sslocal -s 127.0.0.1 -p 6001 -k 123456abc -m aes-256-cfb -v</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
     </div>
 
       

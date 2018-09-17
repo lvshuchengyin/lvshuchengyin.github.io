@@ -3,6 +3,69 @@
   
     
     <entry>
+      <title>hbase操作</title>
+      <link href="/2018/09/17/hbase%E6%93%8D%E4%BD%9C/"/>
+      <url>/2018/09/17/hbase%E6%93%8D%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<h3 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">create <span class="string">'table1'</span>, &#123;</span><br><span class="line">        NAME =&gt; <span class="string">'card'</span>, </span><br><span class="line">        DATA_BLOCK_ENCODING =&gt; <span class="string">'NONE'</span>, </span><br><span class="line">        BLOOMFILTER =&gt; <span class="string">'ROWCOL'</span>, </span><br><span class="line">        REPLICATION_SCOPE =&gt; <span class="string">'1'</span>, </span><br><span class="line">        COMPRESSION =&gt; <span class="string">'SNAPPY'</span>, </span><br><span class="line">        VERSIONS =&gt; <span class="string">'1'</span>, </span><br><span class="line">        MIN_VERSIONS =&gt; <span class="string">'0'</span>, </span><br><span class="line">        KEEP_DELETED_CELLS =&gt; <span class="string">'false'</span>, </span><br><span class="line">        BLOCKSIZE =&gt; <span class="string">'65536'</span>, </span><br><span class="line">        IN_MEMORY =&gt; <span class="string">'false'</span>, </span><br><span class="line">        BLOCKCACHE =&gt; <span class="string">'false'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">put <span class="string">'table1'</span>, <span class="string">'rowkey1'</span>, <span class="string">'card:col3'</span>, <span class="string">'value3'</span></span><br><span class="line">get <span class="string">'table1'</span>, <span class="string">'rowkey1'</span>, &#123;COLUMN =&gt; [<span class="string">'card:col1'</span>, <span class="string">'card:col2'</span>]&#125;</span><br><span class="line">scan <span class="string">'table1'</span></span><br></pre></td></tr></table></figure><h3 id="java"><a href="#java" class="headerlink" title="java"></a>java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line">        Configuration conf = HBaseConfiguration.create();</span><br><span class="line">        conf.set(<span class="string">"hbase.master"</span>, <span class="string">"172.17.161.5:60000"</span>);</span><br><span class="line">        conf.set(<span class="string">"hbase.zookeeper.property.clientport"</span>, <span class="string">"2181"</span>);</span><br><span class="line">        conf.set(<span class="string">"hbase.zookeeper.quorum"</span>, <span class="string">"172.17.161.5"</span>);</span><br><span class="line">        conf.set(<span class="string">"zookeeper.znode.parent"</span>, <span class="string">"/hbase-rpt"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Connection connection = ConnectionFactory.createConnection(conf);</span><br><span class="line">            Admin admin = connection.getAdmin();</span><br><span class="line"></span><br><span class="line">            TableName[] names = admin.listTableNames();</span><br><span class="line">            <span class="keyword">for</span> (TableName tableName : names) &#123;</span><br><span class="line">                logger.info(<span class="string">"Table Name is : "</span> + tableName.getNameAsString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 服务组件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>hdfs设置账号权限</title>
+      <link href="/2018/09/17/hdfs%E8%AE%BE%E7%BD%AE%E8%B4%A6%E5%8F%B7%E6%9D%83%E9%99%90/"/>
+      <url>/2018/09/17/hdfs%E8%AE%BE%E7%BD%AE%E8%B4%A6%E5%8F%B7%E6%9D%83%E9%99%90/</url>
+      <content type="html"><![CDATA[<h3 id="设置目录的默认权限"><a href="#设置目录的默认权限" class="headerlink" title="设置目录的默认权限"></a>设置目录的默认权限</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置目录的默认权限，这样用户新创建的目录和子目录就会自动有权限</span></span><br><span class="line">hdfs dfs -setfacl -R -m default:group:group1:rwx /hive-dw/db1</span><br><span class="line"><span class="comment"># 设置已有目录的权限</span></span><br><span class="line">hdfs dfs -setfacl -R -m group:group1:rwx /hive-dw/db1</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 服务组件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>centos开启ipv6</title>
+      <link href="/2018/09/17/centos%E5%BC%80%E5%90%AFipv6/"/>
+      <url>/2018/09/17/centos%E5%BC%80%E5%90%AFipv6/</url>
+      <content type="html"><![CDATA[<h3 id="编辑-etc-sysconfig-network-scripts-ifcfg-eth0，添加"><a href="#编辑-etc-sysconfig-network-scripts-ifcfg-eth0，添加" class="headerlink" title="编辑/etc/sysconfig/network-scripts/ifcfg-eth0，添加"></a>编辑/etc/sysconfig/network-scripts/ifcfg-eth0，添加</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6ADDR=primary_ipv6_address/64</span><br><span class="line">IPV6_DEFAULTGW=ipv6_gateway</span><br><span class="line">IPV6_AUTOCONF=no</span><br><span class="line">DNS1=2001:4860:4860::8844</span><br><span class="line">DNS2=2001:4860:4860::8888</span><br><span class="line">DNS3=209.244.0.3</span><br></pre></td></tr></table></figure><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping6 2001:4860:4860::8888</span><br></pre></td></tr></table></figure><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.digitalocean.com/community/tutorials/how-to-enable-ipv6-for-digitalocean-droplets</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>nodejs npm包安装</title>
       <link href="/2018/05/27/nodejs-npm%E5%8C%85%E5%AE%89%E8%A3%85/"/>
       <url>/2018/05/27/nodejs-npm%E5%8C%85%E5%AE%89%E8%A3%85/</url>
@@ -96,10 +159,10 @@
     </entry>
     
     <entry>
-      <title>django解决ajax提交时的csrf跨域问题</title>
-      <link href="/2018/05/20/django%E8%A7%A3%E5%86%B3ajax%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84csrf%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
-      <url>/2018/05/20/django%E8%A7%A3%E5%86%B3ajax%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84csrf%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
-      <content type="html"><![CDATA[<p>在js中添加代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// using jQuery</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cookieValue = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.cookie &amp;&amp; <span class="built_in">document</span>.cookie !== <span class="string">''</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie.split(<span class="string">';'</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cookies.length; i++) &#123;</span><br><span class="line">                <span class="keyword">var</span> cookie = jQuery.trim(cookies[i]);</span><br><span class="line">                <span class="comment">// Does this cookie string begin with the name we want?</span></span><br><span class="line">                <span class="keyword">if</span> (cookie.substring(<span class="number">0</span>, name.length + <span class="number">1</span>) === (name + <span class="string">'='</span>)) &#123;</span><br><span class="line">                    cookieValue = <span class="built_in">decodeURIComponent</span>(cookie.substring(name.length + <span class="number">1</span>));</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cookieValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> csrftoken = getCookie(<span class="string">'csrftoken'</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">csrfSafeMethod</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// these HTTP methods do not require CSRF protection</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.test(method));</span><br><span class="line">    &#125;</span><br><span class="line">    $.ajaxSetup(&#123;</span><br><span class="line">        beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="keyword">this</span>.crossDomain) &#123;</span><br><span class="line">                xhr.setRequestHeader(<span class="string">"X-CSRFToken"</span>, csrftoken);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>]]></content>
+      <title>python bottle解决跨域问题</title>
+      <link href="/2018/05/20/python-bottle%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
+      <url>/2018/05/20/python-bottle%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<h3 id="同意跨域"><a href="#同意跨域" class="headerlink" title="同意跨域"></a>同意跨域</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bottle <span class="keyword">import</span> route, run, template, Bottle, response</span><br><span class="line"> </span><br><span class="line">app = Bottle()</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.hook('after_request')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enable_cors</span><span class="params">()</span>:</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Origin'</span>] = <span class="string">'*'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Methods'</span>] = <span class="string">'GET, POST, PUT, OPTIONS'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Headers'</span>] = <span class="string">'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'</span></span><br></pre></td></tr></table></figure>]]></content>
       
       <categories>
           
@@ -117,10 +180,10 @@
     </entry>
     
     <entry>
-      <title>python bottle解决跨域问题</title>
-      <link href="/2018/05/20/python-bottle%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
-      <url>/2018/05/20/python-bottle%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
-      <content type="html"><![CDATA[<h3 id="同意跨域"><a href="#同意跨域" class="headerlink" title="同意跨域"></a>同意跨域</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bottle <span class="keyword">import</span> route, run, template, Bottle, response</span><br><span class="line"> </span><br><span class="line">app = Bottle()</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.hook('after_request')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enable_cors</span><span class="params">()</span>:</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Origin'</span>] = <span class="string">'*'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Methods'</span>] = <span class="string">'GET, POST, PUT, OPTIONS'</span></span><br><span class="line">    response.headers[<span class="string">'Access-Control-Allow-Headers'</span>] = <span class="string">'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'</span></span><br></pre></td></tr></table></figure>]]></content>
+      <title>django解决ajax提交时的csrf跨域问题</title>
+      <link href="/2018/05/20/django%E8%A7%A3%E5%86%B3ajax%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84csrf%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
+      <url>/2018/05/20/django%E8%A7%A3%E5%86%B3ajax%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84csrf%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p>在js中添加代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// using jQuery</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cookieValue = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.cookie &amp;&amp; <span class="built_in">document</span>.cookie !== <span class="string">''</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie.split(<span class="string">';'</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cookies.length; i++) &#123;</span><br><span class="line">                <span class="keyword">var</span> cookie = jQuery.trim(cookies[i]);</span><br><span class="line">                <span class="comment">// Does this cookie string begin with the name we want?</span></span><br><span class="line">                <span class="keyword">if</span> (cookie.substring(<span class="number">0</span>, name.length + <span class="number">1</span>) === (name + <span class="string">'='</span>)) &#123;</span><br><span class="line">                    cookieValue = <span class="built_in">decodeURIComponent</span>(cookie.substring(name.length + <span class="number">1</span>));</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cookieValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> csrftoken = getCookie(<span class="string">'csrftoken'</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">csrfSafeMethod</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// these HTTP methods do not require CSRF protection</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.test(method));</span><br><span class="line">    &#125;</span><br><span class="line">    $.ajaxSetup(&#123;</span><br><span class="line">        beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="keyword">this</span>.crossDomain) &#123;</span><br><span class="line">                xhr.setRequestHeader(<span class="string">"X-CSRFToken"</span>, csrftoken);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>]]></content>
       
       <categories>
           
@@ -941,7 +1004,7 @@
       <title>kafka常用命令</title>
       <link href="/2018/05/20/kafka%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
       <url>/2018/05/20/kafka%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-      <content type="html"><![CDATA[<h3 id="查看topic列表"><a href="#查看topic列表" class="headerlink" title="查看topic列表"></a>查看topic列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics --zookeeper 127.0.0.1 --list</span><br></pre></td></tr></table></figure><h3 id="修改分区数"><a href="#修改分区数" class="headerlink" title="修改分区数"></a>修改分区数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics --zookeeper 127.0.0.1  --alter --topic topic1 --partitions 16</span><br></pre></td></tr></table></figure>]]></content>
+      <content type="html"><![CDATA[<h3 id="查看topic列表"><a href="#查看topic列表" class="headerlink" title="查看topic列表"></a>查看topic列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics --zookeeper 127.0.0.1 --list</span><br></pre></td></tr></table></figure><h3 id="创建topic"><a href="#创建topic" class="headerlink" title="创建topic"></a>创建topic</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --create --zookeeper 127.0.0.1:2181/kafkastreaming --replication-factor 2 --partitions 24 --topic <span class="built_in">test</span></span><br></pre></td></tr></table></figure><h3 id="删除topic"><a href="#删除topic" class="headerlink" title="删除topic"></a>删除topic</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --delete --zookeeper 127.0.0.1:2181/kafkastreaming --topic <span class="built_in">test</span></span><br></pre></td></tr></table></figure><h3 id="修改分区数"><a href="#修改分区数" class="headerlink" title="修改分区数"></a>修改分区数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics --zookeeper 127.0.0.1  --alter --topic topic1 --partitions 16</span><br></pre></td></tr></table></figure><h3 id="生产"><a href="#生产" class="headerlink" title="生产"></a>生产</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-producer.sh --broker-list 127.0.0.1:9092 --topic <span class="built_in">test</span></span><br></pre></td></tr></table></figure><h3 id="消费"><a href="#消费" class="headerlink" title="消费"></a>消费</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic <span class="built_in">test</span> --from-beginning</span><br></pre></td></tr></table></figure>]]></content>
       
       <categories>
           
@@ -1022,27 +1085,6 @@
     </entry>
     
     <entry>
-      <title>shadowshocks配置</title>
-      <link href="/2018/05/20/shadowshocks%E9%85%8D%E7%BD%AE/"/>
-      <url>/2018/05/20/shadowshocks%E9%85%8D%E7%BD%AE/</url>
-      <content type="html"><![CDATA[<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -p 6001 -k 123456abc -m aes-256-cfb -s 0.0.0.0 -v</span><br></pre></td></tr></table></figure><h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sslocal -s 127.0.0.1 -p 6001 -k 123456abc -m aes-256-cfb -v</span><br></pre></td></tr></table></figure>]]></content>
-      
-      <categories>
-          
-          <category> 编程 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> linux </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
       <title>virtualbox允许在共享文件夹创建软连接</title>
       <link href="/2018/05/20/virtualbox%E5%85%81%E8%AE%B8%E5%9C%A8%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9%E5%88%9B%E5%BB%BA%E8%BD%AF%E8%BF%9E%E6%8E%A5/"/>
       <url>/2018/05/20/virtualbox%E5%85%81%E8%AE%B8%E5%9C%A8%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9%E5%88%9B%E5%BB%BA%E8%BD%AF%E8%BF%9E%E6%8E%A5/</url>
@@ -1064,10 +1106,10 @@
     </entry>
     
     <entry>
-      <title>redis</title>
-      <link href="/2018/05/20/redis/"/>
-      <url>/2018/05/20/redis/</url>
-      <content type="html"><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install redis</span><br></pre></td></tr></table></figure><h3 id="客户端连接"><a href="#客户端连接" class="headerlink" title="客户端连接"></a>客户端连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 127.0.0.1 -p 6379</span><br></pre></td></tr></table></figure>]]></content>
+      <title>shadowshocks配置</title>
+      <link href="/2018/05/20/shadowshocks%E9%85%8D%E7%BD%AE/"/>
+      <url>/2018/05/20/shadowshocks%E9%85%8D%E7%BD%AE/</url>
+      <content type="html"><![CDATA[<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -p 6001 -k 123456abc -m aes-256-cfb -s 0.0.0.0 -v</span><br></pre></td></tr></table></figure><h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sslocal -s 127.0.0.1 -p 6001 -k 123456abc -m aes-256-cfb -v</span><br></pre></td></tr></table></figure>]]></content>
       
       <categories>
           
@@ -1078,17 +1120,17 @@
       
         <tags>
             
-            <tag> 服务组件 </tag>
+            <tag> linux </tag>
             
         </tags>
       
     </entry>
     
     <entry>
-      <title>hive执行设置参数</title>
-      <link href="/2018/05/20/hive%E6%89%A7%E8%A1%8C%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0/"/>
-      <url>/2018/05/20/hive%E6%89%A7%E8%A1%8C%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0/</url>
-      <content type="html"><![CDATA[<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> hive.merge.mapredfiles=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">set</span> hive.merge.mapfiles=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">set</span> hive.merge.smallfiles.avgsize=500000000;</span><br><span class="line"><span class="built_in">set</span> mapred.max.split.size=4000000000;</span><br></pre></td></tr></table></figure>]]></content>
+      <title>redis</title>
+      <link href="/2018/05/20/redis/"/>
+      <url>/2018/05/20/redis/</url>
+      <content type="html"><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install redis</span><br></pre></td></tr></table></figure><h3 id="客户端连接"><a href="#客户端连接" class="headerlink" title="客户端连接"></a>客户端连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 127.0.0.1 -p 6379</span><br></pre></td></tr></table></figure>]]></content>
       
       <categories>
           
@@ -1121,6 +1163,27 @@
         <tags>
             
             <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>hive执行设置参数</title>
+      <link href="/2018/05/20/hive%E6%89%A7%E8%A1%8C%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0/"/>
+      <url>/2018/05/20/hive%E6%89%A7%E8%A1%8C%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0/</url>
+      <content type="html"><![CDATA[<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> hive.merge.mapredfiles=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">set</span> hive.merge.mapfiles=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">set</span> hive.merge.smallfiles.avgsize=500000000;</span><br><span class="line"><span class="built_in">set</span> mapred.max.split.size=4000000000;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 服务组件 </tag>
             
         </tags>
       

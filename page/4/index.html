@@ -247,6 +247,209 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-cdh添加自定义扩展服务，分发，管理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/cdh添加自定义扩展服务，分发，管理/" class="article-date">
+      <time datetime="2018-05-20T03:06:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/cdh添加自定义扩展服务，分发，管理/">cdh添加自定义扩展服务，分发，管理</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/cloudera/cm_ext" target="_blank" rel="noopener">https://github.com/cloudera/cm_ext</a></p>
+<p><a href="https://github.com/cloudera/cm_csds" target="_blank" rel="noopener">https://github.com/cloudera/cm_csds</a></p>
+<h3 id="生成parcel"><a href="#生成parcel" class="headerlink" title="生成parcel"></a>生成parcel</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 需要在目标文件夹内新建meta文件，并在meta中新建文件parcel.json，文件内容需要自己参考资料填写</span></span><br><span class="line"><span class="comment"># 验证文件</span></span><br><span class="line">java -jar cm_ext/validator/target/validator.jar -p HELLO-1.0/meta/parcel.json</span><br><span class="line"><span class="comment"># 验证目录</span></span><br><span class="line">java -jar cm_ext/validator/target/validator.jar -d HELLO-1.0</span><br><span class="line"><span class="comment"># 打包parcel</span></span><br><span class="line">tar zcvf HELLO-1.0-el6.parcel HELLO-1.0 --owner=root --group=root</span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">java -jar cm_ext/validator/target/validator.jar -f HELLO-1.0-el6.parcel</span><br></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务组件/">服务组件</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/05/20/cdh添加自定义扩展服务，分发，管理/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-cdh-Cloudera-Manager安装" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/cdh-Cloudera-Manager安装/" class="article-date">
+      <time datetime="2018-05-20T03:05:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/cdh-Cloudera-Manager安装/">cdh-Cloudera Manager安装</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://archive.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin</span><br><span class="line">chmod u+x cloudera-manager-installer.bin</span><br><span class="line">sudo ./cloudera-manager-installer.bin</span><br></pre></td></tr></table></figure>
+<h3 id="服务命令"><a href="#服务命令" class="headerlink" title="服务命令"></a>服务命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service cloudera-scm-server start|stop|restart</span><br><span class="line">service cloudera-scm-agent start|stop|restart</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务组件/">服务组件</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-touch修改文件时间" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/touch修改文件时间/" class="article-date">
+      <time datetime="2018-05-20T03:04:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/touch修改文件时间/">touch修改文件时间</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="touch命令"><a href="#touch命令" class="headerlink" title="touch命令"></a>touch命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">touch -a -m -t 201512180130.09 fileName.ext</span><br><span class="line"> </span><br><span class="line">-a = accessed</span><br><span class="line">-m = modified</span><br><span class="line">-t = timestamp - use [[CC]YY]MMDDhhmm[.ss] time format</span><br><span class="line">-c, --no-create        <span class="keyword">do</span> not create any files</span><br></pre></td></tr></table></figure>
+<h3 id="文件时间说明"><a href="#文件时间说明" class="headerlink" title="文件时间说明"></a>文件时间说明</h3><ul>
+<li>a访问时间，读一次这个文件的内容，这个时间就会更新。比如对这个文件运用 more、cat等命令。ls、stat命令都不会修改文件的访问时间。</li>
+<li>m修改时间，修改时间是文件内容最后一次被修改时间。比如：vi后保存文件。ls -l列出的时间就是这个时间。</li>
+<li>c状态改动时间。是该文件的i节点最后一次被修改的时间，通过chmod、chown命令修改一次文件属性，这个时间就会更新。</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-python性能调试profile" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -705,199 +908,6 @@
       
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-scp" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/scp/" class="article-date">
-      <time datetime="2018-05-20T02:55:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/scp/">scp</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>-P: 指定端口<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -P 1027 -r /e/code/tmp account@192.168.1.102:/home/account/code/tmp</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python-时间格式转换" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/python-时间格式转换/" class="article-date">
-      <time datetime="2018-05-20T02:54:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/python-时间格式转换/">python 时间格式转换</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="datetime和str"><a href="#datetime和str" class="headerlink" title="datetime和str"></a>datetime和str</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># str转datetime</span></span><br><span class="line">datetime.datetime.strptime(<span class="string">'2017-04-23 00:00:00'</span>, <span class="string">'%Y-%m-%d %H:%M:%S'</span>)</span><br><span class="line"><span class="comment"># datetime转str</span></span><br><span class="line">datetime.datetime.now().strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>);</span><br><span class="line"><span class="comment"># datetime转timestamp</span></span><br><span class="line">time.mktime(dt.timetuple())</span><br></pre></td></tr></table></figure>
-<h3 id="utc时间转本地时间"><a href="#utc时间转本地时间" class="headerlink" title="utc时间转本地时间"></a>utc时间转本地时间</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from_zone = tz.tzutc()</span><br><span class="line">to_zone = tz.tzlocal()</span><br><span class="line">utc = datetime.strptime(utcs, <span class="string">'%Y-%m-%dT%H:%M:%SZ'</span>)</span><br><span class="line">utc = utc.replace(tzinfo=from_zone)</span><br><span class="line">local_dt = utc.astimezone(to_zone)</span><br><span class="line">dts = local_dt.strftime(<span class="string">'%Y-%m-%d %H:%M'</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="datetime转timestamp"><a href="#datetime转timestamp" class="headerlink" title="datetime转timestamp"></a>datetime转timestamp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">datetime.fromtimestamp(ts)</span><br><span class="line">datetime.utcfromtimestamp(ts)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-linux-date命令" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/linux-date命令/" class="article-date">
-      <time datetime="2018-05-20T02:53:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/linux-date命令/">linux date命令</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="date格式化"><a href="#date格式化" class="headerlink" title="date格式化"></a>date格式化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date +%Y-%m-%dT%H:%M:%S</span><br></pre></td></tr></table></figure>
-<h3 id="昨天"><a href="#昨天" class="headerlink" title="昨天"></a>昨天</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date -d <span class="string">"yesterday 13:00"</span> <span class="string">'+%Y-%m-%d'</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
     </div>
 
       

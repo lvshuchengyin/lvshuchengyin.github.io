@@ -247,6 +247,140 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-airflow配置" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/airflow配置/" class="article-date">
+      <time datetime="2018-05-20T02:46:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/airflow配置/">airflow配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="修改数据库为mysql"><a href="#修改数据库为mysql" class="headerlink" title="修改数据库为mysql"></a>修改数据库为mysql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_alchemy_conn = mysql://root:123@localhost:3066/airflow?charset=utf8</span><br></pre></td></tr></table></figure>
+<h3 id="修改celery的broker为redis"><a href="#修改celery的broker为redis" class="headerlink" title="修改celery的broker为redis"></a>修改celery的broker为redis</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">broker_url = redis://localhost:6379/0</span><br><span class="line"># rabbitmq: amqp://guest:guest@localhost:5672//</span><br><span class="line">celery_result_backend =  redis://localhost:6379/0</span><br></pre></td></tr></table></figure>
+<h3 id="添加user"><a href="#添加user" class="headerlink" title="添加user"></a>添加user</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> airflow</span><br><span class="line"><span class="keyword">from</span> airflow <span class="keyword">import</span> models, settings</span><br><span class="line"><span class="keyword">from</span> airflow.contrib.auth.backends.password_auth <span class="keyword">import</span> PasswordUser</span><br><span class="line">user = PasswordUser(models.User())</span><br><span class="line">user.username = <span class="string">'test_user'</span></span><br><span class="line">user.email = <span class="string">'test_user@example.com'</span></span><br><span class="line">user.password = <span class="string">'test_user'</span></span><br><span class="line">session = settings.Session()</span><br><span class="line">session.add(user)</span><br><span class="line">session.commit()</span><br><span class="line">session.close()</span><br><span class="line">exit()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务组件/">服务组件</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-windows挂载ubuntu的nfs盘" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/windows挂载ubuntu的nfs盘/" class="article-date">
+      <time datetime="2018-05-20T02:44:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/windows挂载ubuntu的nfs盘/">windows挂载ubuntu的nfs盘</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="安装Ubuntu-nfs"><a href="#安装Ubuntu-nfs" class="headerlink" title="安装Ubuntu nfs"></a>安装Ubuntu nfs</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nfs-kernel-server</span><br></pre></td></tr></table></figure>
+<h3 id="配置-etc-exports"><a href="#配置-etc-exports" class="headerlink" title="配置/etc/exports"></a>配置/etc/exports</h3><p>允许挂载的目录及权限在文件/etc/exports中进行定义。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 例如要共享目录/var/www，需要在/etc/exports文件末尾添加如下一行</span></span><br><span class="line">/var/www *(rw,sync,no_root_squash)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># /var/www是要共享的目录</span></span><br><span class="line"><span class="comment"># *代表允许所有的网络段访问</span></span><br><span class="line"><span class="comment"># rw是可读写权限</span></span><br><span class="line"><span class="comment"># sync是资料同步写入内存和硬盘</span></span><br><span class="line"><span class="comment"># no_root_squash是Ubuntu nfs客户端分享目录使用者的权限,</span></span><br><span class="line"><span class="comment">#    如果客户端使用的是root用户，那么对于该共享目录而言，该客户端就具有root权限</span></span><br></pre></td></tr></table></figure></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/">windows</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/05/20/windows挂载ubuntu的nfs盘/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-virtualbox允许在共享文件夹创建软连接" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -313,6 +447,70 @@
 
 
   
+    <article id="post-shadowshocks配置" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/shadowshocks配置/" class="article-date">
+      <time datetime="2018-05-20T02:42:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/shadowshocks配置/">shadowshocks配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -p 6001 -k 123456abc -m aes-256-cfb -s 0.0.0.0 -v</span><br></pre></td></tr></table></figure>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sslocal -s 127.0.0.1 -p 6001 -k 123456abc -m aes-256-cfb -v</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-redis" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -344,69 +542,6 @@
           
         <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install redis</span><br></pre></td></tr></table></figure>
 <h3 id="客户端连接"><a href="#客户端连接" class="headerlink" title="客户端连接"></a>客户端连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 127.0.0.1 -p 6379</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务组件/">服务组件</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-hive执行设置参数" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/hive执行设置参数/" class="article-date">
-      <time datetime="2018-05-20T02:38:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/hive执行设置参数/">hive执行设置参数</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> hive.merge.mapredfiles=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">set</span> hive.merge.mapfiles=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">set</span> hive.merge.smallfiles.avgsize=500000000;</span><br><span class="line"><span class="built_in">set</span> mapred.max.split.size=4000000000;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -491,6 +626,69 @@
         <p class="article-more-link">
           <a href="/2018/05/20/pyinstller打包/#more">more >></a>
         </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-hive执行设置参数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/20/hive执行设置参数/" class="article-date">
+      <time datetime="2018-05-20T02:38:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/hive执行设置参数/">hive执行设置参数</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> hive.merge.mapredfiles=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">set</span> hive.merge.mapfiles=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">set</span> hive.merge.smallfiles.avgsize=500000000;</span><br><span class="line"><span class="built_in">set</span> mapred.max.split.size=4000000000;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务组件/">服务组件</a></li></ul>
+    </div>
+
       
       <div class="clearfix"></div>
     </div>
@@ -685,197 +883,6 @@
       
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-gevent协程" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/gevent协程/" class="article-date">
-      <time datetime="2018-05-20T02:30:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/gevent协程/">gevent协程</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="模拟多线程运行"><a href="#模拟多线程运行" class="headerlink" title="模拟多线程运行"></a>模拟多线程运行</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gevent <span class="keyword">import</span> monkey</span><br><span class="line">monkey.patch_all()</span><br><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'Running in foo'</span>)</span><br><span class="line">    gevent.sleep(<span class="number">0</span>)</span><br><span class="line">    print(<span class="string">'Explicit context switch to foo again'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'Explicit context to bar'</span>)</span><br><span class="line">    gevent.sleep(<span class="number">0</span>)    </span><br><span class="line">    print(<span class="string">'Implicit context switch back to bar'</span>)</span><br><span class="line"> </span><br><span class="line">gevent.joinall([</span><br><span class="line">    gevent.spawn(foo),</span><br><span class="line">    gevent.spawn(bar),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python遍历文件夹" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/python遍历文件夹/" class="article-date">
-      <time datetime="2018-05-20T02:29:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/python遍历文件夹/">python遍历文件夹</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>followlinks表示是否扫描软连接，topdown是否广度遍历<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_file_path</span><span class="params">(dir_path)</span>:</span></span><br><span class="line">    <span class="string">"""获取文件夹下面的所有文件，包括子文件夹"""</span></span><br><span class="line">    file_list = os.walk(dir_path, topdown=<span class="keyword">True</span>, onerror=<span class="keyword">None</span>, followlinks=<span class="keyword">False</span>)</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> file_list:</span><br><span class="line">        <span class="keyword">for</span> f <span class="keyword">in</span> files:</span><br><span class="line">            path = os.path.join(root, f)</span><br><span class="line">            <span class="keyword">yield</span> path.replace(<span class="string">'\\'</span>, <span class="string">'/'</span>)</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-常用压缩命令" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/常用压缩命令/" class="article-date">
-      <time datetime="2018-05-20T02:27:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/常用压缩命令/">常用压缩命令</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf file.tar</span><br><span class="line">tar -xzvf file.tar.gz</span><br><span class="line">tar -xjvf file.tar.bz2</span><br><span class="line">tar -xZvf file.tar.Z</span><br><span class="line">unrar e file.rar</span><br><span class="line">unzip file.zip</span><br><span class="line">tar zxvf file.tgz</span><br><span class="line">gzip -d</span><br></pre></td></tr></table></figure>
-<h3 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">压缩: tar -cvf FileName.tar DirName</span><br><span class="line">解压: tar -xvf FileName.tar</span><br><span class="line"> </span><br><span class="line">例子: c++目录 压缩成 c++.tar</span><br><span class="line">tar -cvf c++.tar c++</span><br><span class="line"> </span><br><span class="line">c++.tar解压成c++</span><br><span class="line">tar -xvf c++.tar</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
     </div>
 
       

@@ -247,11 +247,204 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-hbase操作" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/17/hbase操作/" class="article-date">
+      <time datetime="2018-09-17T01:32:00.000Z" itemprop="datePublished">2018-09-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/17/hbase操作/">hbase操作</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">create <span class="string">'table1'</span>, &#123;</span><br><span class="line">        NAME =&gt; <span class="string">'card'</span>, </span><br><span class="line">        DATA_BLOCK_ENCODING =&gt; <span class="string">'NONE'</span>, </span><br><span class="line">        BLOOMFILTER =&gt; <span class="string">'ROWCOL'</span>, </span><br><span class="line">        REPLICATION_SCOPE =&gt; <span class="string">'1'</span>, </span><br><span class="line">        COMPRESSION =&gt; <span class="string">'SNAPPY'</span>, </span><br><span class="line">        VERSIONS =&gt; <span class="string">'1'</span>, </span><br><span class="line">        MIN_VERSIONS =&gt; <span class="string">'0'</span>, </span><br><span class="line">        KEEP_DELETED_CELLS =&gt; <span class="string">'false'</span>, </span><br><span class="line">        BLOCKSIZE =&gt; <span class="string">'65536'</span>, </span><br><span class="line">        IN_MEMORY =&gt; <span class="string">'false'</span>, </span><br><span class="line">        BLOCKCACHE =&gt; <span class="string">'false'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">put <span class="string">'table1'</span>, <span class="string">'rowkey1'</span>, <span class="string">'card:col3'</span>, <span class="string">'value3'</span></span><br><span class="line">get <span class="string">'table1'</span>, <span class="string">'rowkey1'</span>, &#123;COLUMN =&gt; [<span class="string">'card:col1'</span>, <span class="string">'card:col2'</span>]&#125;</span><br><span class="line">scan <span class="string">'table1'</span></span><br></pre></td></tr></table></figure>
+<h3 id="java"><a href="#java" class="headerlink" title="java"></a>java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line">        Configuration conf = HBaseConfiguration.create();</span><br><span class="line">        conf.set(<span class="string">"hbase.master"</span>, <span class="string">"172.17.161.5:60000"</span>);</span><br><span class="line">        conf.set(<span class="string">"hbase.zookeeper.property.clientport"</span>, <span class="string">"2181"</span>);</span><br><span class="line">        conf.set(<span class="string">"hbase.zookeeper.quorum"</span>, <span class="string">"172.17.161.5"</span>);</span><br><span class="line">        conf.set(<span class="string">"zookeeper.znode.parent"</span>, <span class="string">"/hbase-rpt"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Connection connection = ConnectionFactory.createConnection(conf);</span><br><span class="line">            Admin admin = connection.getAdmin();</span><br><span class="line"></span><br><span class="line">            TableName[] names = admin.listTableNames();</span><br><span class="line">            <span class="keyword">for</span> (TableName tableName : names) &#123;</span><br><span class="line">                logger.info(<span class="string">"Table Name is : "</span> + tableName.getNameAsString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务组件/">服务组件</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-hdfs设置账号权限" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/17/hdfs设置账号权限/" class="article-date">
+      <time datetime="2018-09-17T01:29:00.000Z" itemprop="datePublished">2018-09-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/17/hdfs设置账号权限/">hdfs设置账号权限</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="设置目录的默认权限"><a href="#设置目录的默认权限" class="headerlink" title="设置目录的默认权限"></a>设置目录的默认权限</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置目录的默认权限，这样用户新创建的目录和子目录就会自动有权限</span></span><br><span class="line">hdfs dfs -setfacl -R -m default:group:group1:rwx /hive-dw/db1</span><br><span class="line"><span class="comment"># 设置已有目录的权限</span></span><br><span class="line">hdfs dfs -setfacl -R -m group:group1:rwx /hive-dw/db1</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务组件/">服务组件</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-centos开启ipv6" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/17/centos开启ipv6/" class="article-date">
+      <time datetime="2018-09-17T01:21:00.000Z" itemprop="datePublished">2018-09-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/17/centos开启ipv6/">centos开启ipv6</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="编辑-etc-sysconfig-network-scripts-ifcfg-eth0，添加"><a href="#编辑-etc-sysconfig-network-scripts-ifcfg-eth0，添加" class="headerlink" title="编辑/etc/sysconfig/network-scripts/ifcfg-eth0，添加"></a>编辑/etc/sysconfig/network-scripts/ifcfg-eth0，添加</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6ADDR=primary_ipv6_address/64</span><br><span class="line">IPV6_DEFAULTGW=ipv6_gateway</span><br><span class="line">IPV6_AUTOCONF=no</span><br><span class="line">DNS1=2001:4860:4860::8844</span><br><span class="line">DNS2=2001:4860:4860::8888</span><br><span class="line">DNS3=209.244.0.3</span><br></pre></td></tr></table></figure>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping6 2001:4860:4860::8888</span><br></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.digitalocean.com/community/tutorials/how-to-enable-ipv6-for-digitalocean-droplets</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-nodejs-npm包安装" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2018/05/27/nodejs-npm包安装/" class="article-date">
-      <time datetime="2018-05-27T10:31:41.000Z" itemprop="datePublished">2018-05-27</time>
+      <time datetime="2018-05-27T10:31:00.000Z" itemprop="datePublished">2018-05-27</time>
 </a>
 
 
@@ -578,70 +771,6 @@
 
 
   
-    <article id="post-django解决ajax提交时的csrf跨域问题" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/django解决ajax提交时的csrf跨域问题/" class="article-date">
-      <time datetime="2018-05-20T03:32:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/django解决ajax提交时的csrf跨域问题/">django解决ajax提交时的csrf跨域问题</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>在js中添加代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// using jQuery</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cookieValue = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.cookie &amp;&amp; <span class="built_in">document</span>.cookie !== <span class="string">''</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie.split(<span class="string">';'</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cookies.length; i++) &#123;</span><br><span class="line">                <span class="keyword">var</span> cookie = jQuery.trim(cookies[i]);</span><br><span class="line">                <span class="comment">// Does this cookie string begin with the name we want?</span></span><br><span class="line">                <span class="keyword">if</span> (cookie.substring(<span class="number">0</span>, name.length + <span class="number">1</span>) === (name + <span class="string">'='</span>)) &#123;</span><br><span class="line">                    cookieValue = <span class="built_in">decodeURIComponent</span>(cookie.substring(name.length + <span class="number">1</span>));</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cookieValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> csrftoken = getCookie(<span class="string">'csrftoken'</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">csrfSafeMethod</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// these HTTP methods do not require CSRF protection</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.test(method));</span><br><span class="line">    &#125;</span><br><span class="line">    $.ajaxSetup(&#123;</span><br><span class="line">        beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="keyword">this</span>.crossDomain) &#123;</span><br><span class="line">                xhr.setRequestHeader(<span class="string">"X-CSRFToken"</span>, csrftoken);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-python-bottle解决跨域问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -705,11 +834,11 @@
 
 
   
-    <article id="post-django使用pymysql访问mysql" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-django解决ajax提交时的csrf跨域问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/05/20/django使用pymysql访问mysql/" class="article-date">
-      <time datetime="2018-05-20T03:31:00.000Z" itemprop="datePublished">2018-05-20</time>
+      <a href="/2018/05/20/django解决ajax提交时的csrf跨域问题/" class="article-date">
+      <time datetime="2018-05-20T03:32:00.000Z" itemprop="datePublished">2018-05-20</time>
 </a>
 
 
@@ -724,7 +853,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/django使用pymysql访问mysql/">django使用pymysql访问mysql</a>
+      <a class="article-title" href="/2018/05/20/django解决ajax提交时的csrf跨域问题/">django解决ajax提交时的csrf跨域问题</a>
     </h1>
   
 
@@ -734,133 +863,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="在manage-py和wsgi-py顶部增加代码"><a href="#在manage-py和wsgi-py顶部增加代码" class="headerlink" title="在manage.py和wsgi.py顶部增加代码"></a>在manage.py和wsgi.py顶部增加代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line">pymysql.install_as_MySQLdb()</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
+        <p>在js中添加代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// using jQuery</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cookieValue = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.cookie &amp;&amp; <span class="built_in">document</span>.cookie !== <span class="string">''</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie.split(<span class="string">';'</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cookies.length; i++) &#123;</span><br><span class="line">                <span class="keyword">var</span> cookie = jQuery.trim(cookies[i]);</span><br><span class="line">                <span class="comment">// Does this cookie string begin with the name we want?</span></span><br><span class="line">                <span class="keyword">if</span> (cookie.substring(<span class="number">0</span>, name.length + <span class="number">1</span>) === (name + <span class="string">'='</span>)) &#123;</span><br><span class="line">                    cookieValue = <span class="built_in">decodeURIComponent</span>(cookie.substring(name.length + <span class="number">1</span>));</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cookieValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> csrftoken = getCookie(<span class="string">'csrftoken'</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">csrfSafeMethod</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// these HTTP methods do not require CSRF protection</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.test(method));</span><br><span class="line">    &#125;</span><br><span class="line">    $.ajaxSetup(&#123;</span><br><span class="line">        beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="keyword">this</span>.crossDomain) &#123;</span><br><span class="line">                xhr.setRequestHeader(<span class="string">"X-CSRFToken"</span>, csrftoken);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python出现证书错误-CERTIFICATE-VERIFY-FAILED" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/python出现证书错误-CERTIFICATE-VERIFY-FAILED/" class="article-date">
-      <time datetime="2018-05-20T03:30:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/python出现证书错误-CERTIFICATE-VERIFY-FAILED/">python出现证书错误 CERTIFICATE_VERIFY_FAILED</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="django-cas或其它python程序，出现错误-CERTIFICATE-VERIFY-FAILED"><a href="#django-cas或其它python程序，出现错误-CERTIFICATE-VERIFY-FAILED" class="headerlink" title="django-cas或其它python程序，出现错误 CERTIFICATE_VERIFY_FAILED"></a>django-cas或其它python程序，出现错误 CERTIFICATE_VERIFY_FAILED</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed</span><br><span class="line"> </span><br><span class="line"># 增加代码，不检验自签名证书</span><br><span class="line">import ssl</span><br><span class="line">ssl._create_default_https_context = ssl._create_unverified_context</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python-安装pip" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/20/python-安装pip/" class="article-date">
-      <time datetime="2018-05-20T03:28:00.000Z" itemprop="datePublished">2018-05-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/python-安装pip/">python 安装pip</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</span><br><span class="line">python get-pip.py</span><br></pre></td></tr></table></figure>
       
     </div>
     

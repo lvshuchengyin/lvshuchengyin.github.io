@@ -1,7 +1,8 @@
 title: nodejs npm包安装
 author: Lscy
-date: 2018-05-27 18:31:41
-tags:
+tags: []
+categories: []
+date: 2018-05-27 18:31:00
 ---
 ### 设置下载镜像地址
 ~~~ bash
