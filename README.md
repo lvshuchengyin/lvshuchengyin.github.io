@@ -1,4 +1,4 @@
 # lvshuchengyin.github.io
 github pages
 
-move to https://www.simpledao.top/blog/
+move to https://www.simpledao.com/blog/
